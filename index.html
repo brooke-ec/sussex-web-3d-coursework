@@ -10,11 +10,25 @@
 	<body>
 		<header>
 			<img src="/assets/logo.svg" width="200px" />
+			<label class="hamburger">
+				&#9776;
+				<input type="checkbox" />
+			</label>
 			<nav>
-				<a>Home</a>
-				<a>About</a>
-				<a>Drinks</a>
-				<a>Contact</a>
+				<a href="/home">Home</a>
+				<a href="/about">About</a>
+				<div class="dropdown">
+					<label>
+						Drinks
+						<input type="checkbox" />
+					</label>
+					<nav>
+						<a href="/drinks/cocacola">Coca Cola</a>
+						<a href="/drinks/sprite">Sprite</a>
+						<a href="/drinks/drpepper">Dr Pepper</a>
+					</nav>
+				</div>
+				<a href="/contact">Contact</a>
 			</nav>
 		</header>
 		<div style="background: red">Background image, or you could use bootstrap carousel</div>
