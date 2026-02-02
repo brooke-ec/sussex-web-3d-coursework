@@ -11,6 +11,11 @@
 		U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+@font-face {
+	font-family: "Lokicola";
+	src: url("/assets/lokicola.ttf") format("truetype");
+}
+
 :root {
 	font-family: "Roboto Variable", sans-serif;
 }
@@ -20,6 +25,7 @@ body {
 	display: flex;
 	height: 100vh;
 	flex-direction: column;
+	background-color: lavender;
 }
 
 header {
@@ -89,6 +95,18 @@ header > .hamburger {
 	padding: 10px;
 }
 
+.marginh {
+	margin: 0 10px;
+}
+
+.marginv {
+	margin: 10px 0;
+}
+
+.margin {
+	margin: 10px;
+}
+
 .fullw {
 	width: 100%;
 }
@@ -102,9 +120,20 @@ header > .hamburger {
 	height: 100%;
 }
 
+.card {
+	border: lightgray 3px solid;
+	background-color: white;
+	border-radius: 10px;
+	padding: 10px;
+}
+
 .grid {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
+
+	&.gap {
+		gap: 10px;
+	}
 }
 
 footer {
@@ -127,6 +156,19 @@ a.button {
 	border-radius: 5px;
 	display: inline-block;
 	margin-top: 10px;
+}
+
+.hero {
+	background: url("/assets/images/main_3D.jpg");
+	background-size: cover;
+	margin: 10px 0;
+
+	& > div {
+		background-color: rgba(255, 255, 255, 0.5);
+		margin: 200px 30px 10px 30px;
+		padding: 10px 20px;
+		color: black;
+	}
 }
 
 @media (max-width: 900px) {
