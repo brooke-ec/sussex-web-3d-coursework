@@ -6,6 +6,11 @@
 		<title>Web 3D Applications</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/assets/style.css" />
+		<script src="https://kit.fontawesome.com/6ac3910c4e.js" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/106/three.min.js"></script>
+		<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/2666677/OrbitControls.js"></script>
+		<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/2666677/GLTFLoader.js"></script>
+		<script src="./assets/script.js"></script>
 	</head>
 	<body>
 		<header>
@@ -31,32 +36,8 @@
 				<a href="/contact">Contact</a>
 			</nav>
 		</header>
-		<div class="hero">
-			<div>
-				<h1 style="color: red">Coca Cola Great Britain</h1>
-				<div style="color: green">Founded by Dr John S Pemberton</div>
-				<p>The Coca Cola Company is the world's leading manufacturer... etc</p>
-			</div>
-		</div>
-		<div class="grid gap marginh">
-			<div class="card">
-				<img class="fullw" src="/assets/images/coca_cola.jpg" />
-				<h2>Coca Cola</h2>
-				<p>Coca Cola Text Here</p>
-				<a class="button" href="/drinks/cocacola">Find out more</a>
-			</div>
-			<div class="card">
-				<img class="fullw" src="/assets/images/sprite.jpg" />
-				<h2>Sprite</h2>
-				<p>Sprite Text Here</p>
-				<a class="button" href="/drinks/sprite">Find out more</a>
-			</div>
-			<div class="card">
-				<img class="fullw" src="/assets/images/dr_pepper.jpg" />
-				<h2>Dr Pepper</h2>
-				<p>Dr Pepper Text Here</p>
-				<a class="button" href="/drinks/drpepper">Find out more</a>
-			</div>
+		<div id="renderer">
+			<button id="btn">Open the Can</button>
 		</div>
 		<footer>
 			&copy; 2024 Mobile Web Applications
