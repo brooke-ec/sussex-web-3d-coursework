@@ -1,0 +1,28 @@
+.hero {
+	pointer-events: none;
+	max-height: 500px;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 15px;
+
+	video {
+		height: 100%;
+		width: auto;
+	}
+
+	.overlay {
+		position: absolute;
+		text-align: center;
+
+		h1 {
+			font-size: 3vw;
+			font-weight: 800;
+		}
+
+		p {
+			font-size: 1.3vw;
+		}
+	}
+}
