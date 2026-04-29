@@ -1,11 +1,14 @@
+body {
+	overflow-x: hidden;
+}
+
 .hero {
 	pointer-events: none;
-	max-height: 500px;
+	max-height: min(500px, calc(100vh - 200px));
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 15px;
 
 	video {
 		height: 100%;
@@ -17,12 +20,12 @@
 		text-align: center;
 
 		h1 {
-			font-size: 3vw;
+			font-size: max(3vw, 30px);
 			font-weight: 800;
 		}
 
 		p {
-			font-size: 1.3vw;
+			font-size: max(1.3vw, 15px);
 		}
 	}
 }
