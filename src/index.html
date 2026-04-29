@@ -6,10 +6,20 @@
 		<title>Megastructure Archive</title>
 
 		<link rel="stylesheet" href="/assets/style.css" />
+		<script type="module" src="/assets/script.js"></script>
 
 		<!-- LIBRARIES -->
 		<link rel="stylesheet" href="/assets/bootstrap/bootstrap.min.css" />
 		<script src="/assets/bootstrap/bootstrap.bundle.min.js"></script>
+
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "https://cdn.jsdelivr.net/npm/three@v0.184.0/build/three.module.js",
+					"three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.184.0/examples/jsm/"
+				}
+			}
+		</script>
 	</head>
 
 	<body>
@@ -63,8 +73,8 @@
 		<!-- PAGE CONTENT -->
 		<main>
 			<!-- HERO -->
-			<div class="hero">
-				<video autoplay muted loop>
+			<div id="hero">
+				<video autoplay muted loop data-depth="0.2">
 					<source src="./hero.webm" type="video/webm" />
 				</video>
 				<div class="overlay">
@@ -72,6 +82,12 @@
 					<p>A library of breathtaking megastructures from fiction.</p>
 				</div>
 			</div>
+
+			<!-- APPLY PARALLAX -->
+			<script type="module">
+				import { parallax } from "/assets/script.js";
+				parallax(document.getElementById("hero"));
+			</script>
 
 			<!-- CARDS -->
 			<div class="container-fluid">

@@ -2,7 +2,7 @@ body {
 	overflow-x: hidden;
 }
 
-.hero {
+#hero {
 	pointer-events: none;
 	max-height: min(500px, calc(100vh - 200px));
 	overflow: hidden;
@@ -11,8 +11,8 @@ body {
 	align-items: center;
 
 	video {
-		height: 100%;
-		width: auto;
+		height: auto;
+		width: 100%;
 	}
 
 	.overlay {
