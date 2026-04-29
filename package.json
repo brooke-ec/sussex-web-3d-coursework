@@ -1,5 +1,21 @@
 {
-	"dependencies": {
-		"bootstrap": "^5.3.8"
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"lint": "prettier --check . && tsc --noEmit",
+		"format": "prettier --write ."
+	},
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "^11.0.0",
+			"onFail": "download"
+		}
+	},
+	"devDependencies": {
+		"@types/bootstrap": "^5.2.10",
+		"@types/three": "^0.184.0",
+		"prettier": "^3.8.3",
+		"typescript": "^6.0.3"
 	}
 }

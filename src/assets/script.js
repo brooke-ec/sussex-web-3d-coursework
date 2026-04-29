@@ -16,11 +16,14 @@ export function parallax(scene) {
 
 		let offset = 0;
 		for (const node of scene.childNodes) {
-			if (node instanceof HTMLElement && node.hasAttribute("data-depth")) {
-				const depth = parseFloat(node.getAttribute("data-depth")) * 0.25;
-				node.style.transform = `translate(${(window.scrollX * 4 - pointer.x) * depth}px, ${(window.scrollY * 4 - pointer.y) * depth - offset}px)`;
-				node.style.scale = `${1 + depth}`;
-				offset += node.clientHeight;
+			if (node instanceof HTMLElement) {
+				const attr = node.getAttribute("data-depth");
+				if (attr) {
+					const depth = parseFloat(attr) * 0.25;
+					node.style.transform = `translate(${(window.scrollX * 4 - pointer.x) * depth}px, ${(window.scrollY * 4 - pointer.y) * depth - offset}px)`;
+					node.style.scale = `${1 + depth}`;
+					offset += node.clientHeight;
+				}
 			}
 		}
 	}

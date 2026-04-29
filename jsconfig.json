@@ -1,0 +1,18 @@
+{
+	"$schema": "https://www.schemastore.org/jsconfig.json",
+	"compilerOptions": {
+		"lib": ["ESNext", "DOM"],
+		"module": "ESNext",
+		"target": "ESNext",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"moduleResolution": "bundler",
+		"strict": true,
+		"checkJs": true,
+		"allowJs": true,
+		"skipLibCheck": true,
+		"noEmit": true,
+		"types": ["three", "bootstrap"]
+	},
+	"include": ["./src/**/*.js"]
+}
