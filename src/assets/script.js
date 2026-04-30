@@ -17,6 +17,7 @@ import * as THREE from "three";
  * @property {Position & {target: Position, speed: number}} camera - Camera configuration.
  * @property {{file: string, height: number}} ambience - Sound confuguration for the scene
  * @property {Position & {resolution: number}} sun - The position of the sun in the scene.
+ * @property {{file: string, rotation: THREE.Euler}} model - The path to the GLTF model to load and its rotation.
  * @property {string[]} skybox - The paths to the skybox textures.
  */
 
@@ -87,6 +88,7 @@ export function setup(container, options) {
 			}
 		});
 
+		gltf.scene.setRotationFromEuler(options.model.rotation);
 		scene.add(gltf.scene);
 	});
 
@@ -176,6 +178,14 @@ export function setup(container, options) {
 				action.timeScale = forward ? 1 : -1;
 				action.play();
 			});
+		},
+		/**
+		 * Disables or enables shadows in the scene.
+		 * @param {boolean} enabled
+		 */
+		shadows(enabled) {
+			renderer.shadowMap.enabled = enabled;
+			sun.castShadow = enabled;
 		},
 	};
 }
