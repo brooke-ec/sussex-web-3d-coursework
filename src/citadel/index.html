@@ -76,7 +76,18 @@
 
 		<!-- PAGE CONTENT -->
 		<main>
-			<h1>The Citadel</h1>
+			<!-- SCENE -->
+			<div id="scene"></div>
+
+			<script type="module">
+				import { setup } from "/assets/script.js";
+				setup(document.getElementById("scene"));
+			</script>
+
+			<!-- CONTENT -->
+			<div class="container-fluid">
+				<h1>The Citadel</h1>
+			</div>
 		</main>
 
 		<!-- FOOTER -->
