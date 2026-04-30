@@ -4,7 +4,7 @@ import * as THREE from "three";
 const container = document.getElementById("scene");
 if (!container) throw new Error("Scene container not found");
 
-const { scene, listener } = setup(container, {
+const { scene, listener, play } = setup(container, {
 	camera: { x: 1, y: 1, z: -15, target: { x: 0, y: 9, z: 0 }, speed: 0.5 },
 	ambience: { file: "/assets/citadel/ambience.wav", height: 10 },
 	sun: { x: -7.5, y: 6, z: 0, resolution: 10 },
@@ -18,19 +18,21 @@ const { scene, listener } = setup(container, {
 	],
 });
 
+/// RANDOM SOUNDS
+
 const sounds = [
 	// Overwatch Announcements
-	{ file: "/assets/citadel/offworldrelocation_spkr.wav", min: 30, max: 40 },
-	{ file: "/assets/citadel/confirmcivilstatus_spkr.wav", min: 30, max: 40 },
-	{ file: "/assets/citadel/sociolevel_spkr.wav", min: 30, max: 40 },
+	{ file: "/assets/citadel/offworldrelocation_spkr.wav", min: 30, max: 60 },
+	{ file: "/assets/citadel/confirmcivilstatus_spkr.wav", min: 30, max: 60 },
+	{ file: "/assets/citadel/sociolevel_spkr.wav", min: 30, max: 60 },
 
 	// Alarm Sounds
-	{ file: "/assets/citadel/scanner_alert_pass.wav", min: 30, max: 40 },
-	{ file: "/assets/citadel/manhack_alert_pass.wav", min: 30, max: 40 },
-	{ file: "/assets/citadel/apc_alarm_pass.wav", min: 30, max: 40 },
+	{ file: "/assets/citadel/scanner_alert_pass.wav", min: 60, max: 120 },
+	{ file: "/assets/citadel/manhack_alert_pass.wav", min: 60, max: 120 },
+	{ file: "/assets/citadel/apc_alarm_pass.wav", min: 60, max: 120 },
 
 	// Vehicle Sounds
-	{ file: "/assets/citadel/train_horn_distant.wav", min: 30, max: 60 },
+	{ file: "/assets/citadel/train_horn_distant.wav", min: 60, max: 150 },
 	{ file: "/assets/citadel/apc_distant1.wav", min: 5, max: 30 },
 	{ file: "/assets/citadel/apc_distant2.wav", min: 5, max: 30 },
 	{ file: "/assets/citadel/apc_distant3.wav", min: 5, max: 30 },
@@ -48,10 +50,30 @@ for (const sound of sounds) {
 
 		function play() {
 			setTimeout(play, (Math.random() * (sound.max - sound.min) + sound.min) * 1000);
-			audio.position.set(Math.random() * 30 - 15, 0, Math.random() * 30 - 15);
-			audio.play();
+			if (!audio.isPlaying) {
+				audio.position.set(Math.random() * 30 - 15, 0, Math.random() * 30 - 15);
+				audio.play();
+			}
 		}
 
-		setTimeout(play, sound.min / 2 + Math.random() * (sound.max + 40) * 1000);
+		setTimeout(play, sound.min / 4 + Math.random() * sound.max * 1000);
 	});
 }
+
+// ALERT BUTTON
+
+let opening = false;
+
+const alarm = new THREE.Audio(listener);
+loader.load("/assets/citadel/citadel_alert.wav", (buffer) => {
+	alarm.setBuffer(buffer);
+});
+
+const alertbtn = document.getElementById("alert-btn");
+if (!alertbtn) throw new Error("Alert button not found");
+
+alertbtn.addEventListener("click", () => {
+	opening = !opening;
+	if (opening) alarm.play();
+	play(opening);
+});

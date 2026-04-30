@@ -72,7 +72,14 @@ export function setup(container, options) {
 	controls.zoomSpeed = 1.75;
 
 	// LOAD SCENE FROM GLTF
+	const mixer = new THREE.AnimationMixer(scene);
+
+	/** @type {THREE.AnimationClip[]} */
+	let clips = [];
+	let playForward = true;
+
 	new GLTFLoader().load("/assets/citadel/scene.glb", (gltf) => {
+		clips = gltf.animations;
 		gltf.scene.traverse(function (child) {
 			if ("isMesh" in child && child.isMesh) {
 				child.receiveShadow = true;
@@ -92,15 +99,6 @@ export function setup(container, options) {
 	composer.addPass(taa);
 
 	composer.addPass(new OutputPass());
-
-	// FUNCTIONALITY
-	window.addEventListener("resize", () => {
-		camera.aspect = container.clientWidth / container.clientHeight;
-		camera.updateProjectionMatrix();
-
-		renderer.setSize(container.clientWidth, container.clientHeight);
-		composer.setSize(container.clientWidth, container.clientHeight);
-	});
 
 	// SETUP AUDIO
 	const listener = new THREE.AudioListener();
@@ -133,11 +131,24 @@ export function setup(container, options) {
 		});
 	}
 
+	// FUNCTIONALITY
+	window.addEventListener("resize", () => {
+		camera.aspect = container.clientWidth / container.clientHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize(container.clientWidth, container.clientHeight);
+		composer.setSize(container.clientWidth, container.clientHeight);
+	});
+
+	const timer = new THREE.Timer();
+
 	function animate() {
+		timer.update();
 		camera.position.y = Math.max(0.25, camera.position.y);
 		controls.update();
 
 		ambience.setVolume(0.2 + 0.25 * (1 - THREE.MathUtils.clamp(camera.position.y / options.ambience.height, 0, 1)));
+		mixer.update(timer.getDelta());
 		composer.render();
 	}
 
@@ -148,6 +159,24 @@ export function setup(container, options) {
 		camera,
 		renderer,
 		listener,
+		/**
+		 * Plays the scene's animation clips in the given direction.
+		 * @param {boolean} forward
+		 */
+		play(forward) {
+			clips.forEach(function (clip) {
+				const action = mixer.clipAction(clip);
+				if (!action.isRunning()) {
+					action.reset();
+					action.time = forward ? 0 : clip.duration;
+				}
+
+				action.setLoop(THREE.LoopOnce, 1);
+				action.clampWhenFinished = true;
+				action.timeScale = forward ? 1 : -1;
+				action.play();
+			});
+		},
 	};
 }
 
