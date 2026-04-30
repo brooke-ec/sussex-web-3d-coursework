@@ -32,4 +32,8 @@ body {
 
 #scene {
 	min-height: 60vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: var(--bs-secondary-bg-subtle);
 }

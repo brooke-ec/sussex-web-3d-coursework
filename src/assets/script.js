@@ -6,28 +6,56 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "three";
 
 /**
+ * @typedef {Object} Position
+ * @property {number} x
+ * @property {number} y
+ * @property {number} z
+ */
+
+/**
+ * @typedef {Object} SceneOptions
+ * @property {Position & {target: Position, speed: number}} camera - Camera configuration.
+ * @property {{file: string, height: number}} ambience - Sound confuguration for the scene
+ * @property {Position & {resolution: number}} sun - The position of the sun in the scene.
+ * @property {string[]} skybox - The paths to the skybox textures.
+ */
+
+/**
  * Initialises a three.js scene on the given container element.
  * @param {HTMLElement} container
+ * @param {SceneOptions} options
  */
-export async function setup(container) {
+export async function setup(container, options) {
+	// SETUP SCENE
 	const scene = new THREE.Scene();
-	const texture = new THREE.CubeTextureLoader().load([
-		"/assets/citadel/px.png", // right
-		"/assets/citadel/nx.png", // left
-		"/assets/citadel/py.png", // top
-		"/assets/citadel/ny.png", // bottom
-		"/assets/citadel/pz.png", // front
-		"/assets/citadel/nz.png", // back
-	]);
 
+	const texture = new THREE.CubeTextureLoader().load(options.skybox);
 	scene.environment = texture;
 	scene.background = texture;
 
-	const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-	camera.position.y = 1;
-	camera.position.z = -15;
-	camera.position.x = 1;
+	// SETUP SUN
+	const sun = new THREE.DirectionalLight(0xfff1c4, 3);
+	sun.position.set(options.sun.x, options.sun.y, options.sun.z);
 
+	sun.shadow.camera.top = options.sun.resolution;
+	sun.shadow.camera.bottom = -options.sun.resolution;
+	sun.shadow.camera.left = options.sun.resolution;
+	sun.shadow.camera.right = -options.sun.resolution;
+
+	sun.shadow.mapSize.width = (1024 * options.sun.resolution) / 5;
+	sun.shadow.mapSize.height = (1024 * options.sun.resolution) / 5;
+
+	sun.shadow.bias = -0.001;
+	sun.castShadow = true;
+	scene.add(sun);
+
+	// SETUP CAMERA
+	const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+	camera.position.x = options.camera.x;
+	camera.position.y = options.camera.y;
+	camera.position.z = options.camera.z;
+
+	// SETUP RENDERER
 	const renderer = new THREE.WebGLRenderer();
 	renderer.setSize(container.clientWidth, container.clientHeight);
 	container.appendChild(renderer.domElement);
@@ -35,6 +63,26 @@ export async function setup(container) {
 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
 	renderer.shadowMap.enabled = true;
 
+	// SETUP CONTROLS
+	const controls = new OrbitControls(camera, renderer.domElement);
+	controls.target.set(options.camera.target.x, options.camera.target.y, options.camera.target.z);
+	controls.autoRotateSpeed = options.camera.speed;
+	controls.enableDamping = true;
+	controls.autoRotate = true;
+	controls.zoomSpeed = 1.75;
+
+	// LOAD SCENE FROM GLTF
+	const gltf = await new GLTFLoader().loadAsync("/assets/citadel/scene.glb");
+	gltf.scene.traverse(function (child) {
+		if ("isMesh" in child && child.isMesh) {
+			child.receiveShadow = true;
+			child.castShadow = true;
+		}
+	});
+
+	scene.add(gltf.scene);
+
+	// SETUP POST-PROCESSING
 	const composer = new EffectComposer(renderer);
 
 	const taa = new TAARenderPass(scene, camera);
@@ -44,39 +92,7 @@ export async function setup(container) {
 
 	composer.addPass(new OutputPass());
 
-	const controls = new OrbitControls(camera, renderer.domElement);
-	controls.autoRotateSpeed = 0.5;
-	controls.enableDamping = true;
-	controls.target.set(0, 9, 0);
-	controls.autoRotate = true;
-	controls.zoomSpeed = 1.75;
-
-	const sun = new THREE.DirectionalLight(0xffffff, 2);
-	sun.position.set(-7.5, 6, 0);
-
-	const d = 10;
-	sun.shadow.camera.top = d;
-	sun.shadow.camera.bottom = -d;
-	sun.shadow.camera.left = d;
-	sun.shadow.camera.right = -d;
-
-	sun.shadow.mapSize.width = 1024 * 2;
-	sun.shadow.mapSize.height = 1024 * 2;
-
-	sun.shadow.bias = -0.001;
-	sun.castShadow = true;
-	scene.add(sun);
-
-	const gltf = await new GLTFLoader().loadAsync("/assets/citadel/scene.glb");
-	gltf.scene.traverse(function (child) {
-		if (child.isObject3D) {
-			child.castShadow = true;
-			child.receiveShadow = true;
-		}
-	});
-
-	scene.add(gltf.scene);
-
+	// FUNCTIONALITY
 	window.addEventListener("resize", () => {
 		camera.aspect = container.clientWidth / container.clientHeight;
 		camera.updateProjectionMatrix();
@@ -85,8 +101,41 @@ export async function setup(container) {
 		composer.setSize(container.clientWidth, container.clientHeight);
 	});
 
+	// SETUP AUDIO
+	const listener = new THREE.AudioListener();
+	camera.add(listener);
+
+	const ambience = new THREE.Audio(listener);
+	ambience.setBuffer(await new THREE.AudioLoader().loadAsync(options.ambience.file));
+	ambience.setLoop(true);
+	ambience.setVolume(1);
+	ambience.play();
+
+	// CREATE PLAY BUTTON
+	if (ambience.context.state === "suspended") {
+		renderer.domElement.style.pointerEvents = "none";
+
+		const button = document.createElement("button");
+		button.textContent = "🔇";
+		button.style.border = "none";
+		button.style.position = "absolute";
+		button.style.fontSize = "25vh";
+		button.style.width = "100%";
+		button.style.backgroundColor = "#adadadad";
+		container.appendChild(button);
+
+		button.addEventListener("click", () => {
+			renderer.domElement.style.pointerEvents = "auto";
+			listener.context.resume();
+			button.remove();
+		});
+	}
+
 	function animate() {
+		camera.position.y = Math.max(0.25, camera.position.y);
 		controls.update();
+
+		ambience.setVolume(1 - THREE.MathUtils.clamp(camera.position.y / options.ambience.height, 0, 1));
 		composer.render();
 	}
 
