@@ -25,7 +25,7 @@ import * as THREE from "three";
  * @param {HTMLElement} container
  * @param {SceneOptions} options
  */
-export async function setup(container, options) {
+export function setup(container, options) {
 	// SETUP SCENE
 	const scene = new THREE.Scene();
 
@@ -72,15 +72,16 @@ export async function setup(container, options) {
 	controls.zoomSpeed = 1.75;
 
 	// LOAD SCENE FROM GLTF
-	const gltf = await new GLTFLoader().loadAsync("/assets/citadel/scene.glb");
-	gltf.scene.traverse(function (child) {
-		if ("isMesh" in child && child.isMesh) {
-			child.receiveShadow = true;
-			child.castShadow = true;
-		}
-	});
+	new GLTFLoader().load("/assets/citadel/scene.glb", (gltf) => {
+		gltf.scene.traverse(function (child) {
+			if ("isMesh" in child && child.isMesh) {
+				child.receiveShadow = true;
+				child.castShadow = true;
+			}
+		});
 
-	scene.add(gltf.scene);
+		scene.add(gltf.scene);
+	});
 
 	// SETUP POST-PROCESSING
 	const composer = new EffectComposer(renderer);
@@ -106,10 +107,11 @@ export async function setup(container, options) {
 	camera.add(listener);
 
 	const ambience = new THREE.Audio(listener);
-	ambience.setBuffer(await new THREE.AudioLoader().loadAsync(options.ambience.file));
-	ambience.setLoop(true);
-	ambience.setVolume(1);
-	ambience.play();
+	new THREE.AudioLoader().load(options.ambience.file, (buffer) => {
+		ambience.setBuffer(buffer);
+		ambience.setLoop(true);
+		ambience.play();
+	});
 
 	// CREATE PLAY BUTTON
 	if (ambience.context.state === "suspended") {
@@ -135,11 +137,18 @@ export async function setup(container, options) {
 		camera.position.y = Math.max(0.25, camera.position.y);
 		controls.update();
 
-		ambience.setVolume(1 - THREE.MathUtils.clamp(camera.position.y / options.ambience.height, 0, 1));
+		ambience.setVolume(0.2 + 0.25 * (1 - THREE.MathUtils.clamp(camera.position.y / options.ambience.height, 0, 1)));
 		composer.render();
 	}
 
 	renderer.setAnimationLoop(animate);
+
+	return {
+		scene,
+		camera,
+		renderer,
+		listener,
+	};
 }
 
 /**
