@@ -2,6 +2,7 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { TAARenderPass } from "three/examples/jsm/postprocessing/TAARenderPass.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
+import { GlitchPass } from "three/examples/jsm/postprocessing/GlitchPass.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "three";
 
@@ -43,12 +44,16 @@ export function setup(container, options) {
 	sun.shadow.camera.left = options.sun.resolution;
 	sun.shadow.camera.right = -options.sun.resolution;
 
-	sun.shadow.mapSize.width = (1024 * options.sun.resolution) / 5;
-	sun.shadow.mapSize.height = (1024 * options.sun.resolution) / 5;
+	sun.shadow.mapSize.width = (128 * options.sun.resolution) / 5;
+	sun.shadow.mapSize.height = (128 * options.sun.resolution) / 5;
 
 	sun.shadow.bias = -0.001;
 	sun.castShadow = true;
 	scene.add(sun);
+
+	const shadowhelper = new THREE.CameraHelper(sun.shadow.camera);
+	shadowhelper.visible = false;
+	scene.add(shadowhelper);
 
 	// SETUP CAMERA
 	const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
@@ -82,7 +87,7 @@ export function setup(container, options) {
 	new GLTFLoader().load("/assets/citadel/scene.glb", (gltf) => {
 		clips = gltf.animations;
 		gltf.scene.traverse(function (child) {
-			if ("isMesh" in child && child.isMesh) {
+			if (child instanceof THREE.Mesh) {
 				child.receiveShadow = true;
 				child.castShadow = true;
 			}
@@ -99,6 +104,11 @@ export function setup(container, options) {
 	taa.sampleLevel = 3;
 	taa.unbiased = false;
 	composer.addPass(taa);
+
+	const glitch = new GlitchPass();
+	glitch.enabled = false;
+	glitch.goWild = true;
+	composer.addPass(glitch);
 
 	composer.addPass(new OutputPass());
 
@@ -156,6 +166,32 @@ export function setup(container, options) {
 
 	renderer.setAnimationLoop(animate);
 
+	// SETTINGS
+	bindtoggle("shadow-btn", true, "👤 Disable Shadows", "👤 Enable Shadows", (value) => {
+		renderer.shadowMap.enabled = value;
+		sun.castShadow = value;
+	});
+
+	bindtoggle("mute-btn", true, "🔇 Mute", "🔇 Unmute", (value) => {
+		listener.setMasterVolume(value ? 1 : 0);
+	});
+
+	bindtoggle("helper-btn", false, "🎥 Hide Shadow Camera", "🎥 Show Shadow Camera", (value) => {
+		shadowhelper.visible = value;
+	});
+
+	bindtoggle("glitch-btn", false, "👾 Disable Glitch Shader", "👾 Enable Glitch Shader", (value) => {
+		glitch.enabled = value;
+	});
+
+	bindtoggle("wireframe-btn", true, "▩ Disable Wireframe", "▩ Enable Wireframe", (value) => {
+		scene.traverse((child) => {
+			if (child instanceof THREE.Mesh) {
+				child.material.wireframe = !value;
+			}
+		});
+	});
+
 	return {
 		scene,
 		camera,
@@ -179,15 +215,28 @@ export function setup(container, options) {
 				action.play();
 			});
 		},
-		/**
-		 * Disables or enables shadows in the scene.
-		 * @param {boolean} enabled
-		 */
-		shadows(enabled) {
-			renderer.shadowMap.enabled = enabled;
-			sun.castShadow = enabled;
-		},
 	};
+}
+
+/**
+ * Helper to create a toggle button.
+ * @param {string} id The HTML id field of the button
+ * @param {boolean} value The initial value of the toggle
+ * @param {string} textOn The text to display when the button is true
+ * @param {string} textOff The text to display when the button is off
+ * @param {(value: boolean) => void} callback
+ * @returns
+ */
+export function bindtoggle(id, value, textOn, textOff, callback) {
+	const button = document.getElementById(id);
+	if (!button) return;
+
+	button.textContent = value ? textOn : textOff;
+	button.addEventListener("click", () => {
+		value = !value;
+		button.textContent = value ? textOn : textOff;
+		callback(value);
+	});
 }
 
 /**

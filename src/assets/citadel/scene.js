@@ -1,14 +1,14 @@
-import { setup } from "../script.js";
+import { bindtoggle, setup } from "../script.js";
 import * as THREE from "three";
 
 const container = document.getElementById("scene");
 if (!container) throw new Error("Scene container not found");
 
-const { scene, listener, play, shadows } = setup(container, {
+const { scene, listener, play } = setup(container, {
 	model: { file: "/assets/citadel/scene.gltf", rotation: new THREE.Euler(0, -Math.PI / 2, 0) },
 	camera: { x: 1, y: 1, z: 13.5, target: { x: 0, y: 9, z: 0 }, speed: 0.25 },
 	ambience: { file: "/assets/citadel/ambience.wav", height: 10 },
-	sun: { x: -32, y: 30, z: 0, resolution: 30 },
+	sun: { x: -32, y: 30, z: 0, resolution: 25 },
 	skybox: [
 		"/assets/citadel/px.png", // right
 		"/assets/citadel/nx.png", // left
@@ -63,31 +63,12 @@ for (const sound of sounds) {
 
 // ALERT BUTTON
 
-let opening = false;
-
 const alarm = new THREE.Audio(listener);
 loader.load("/assets/citadel/citadel_alert.wav", (buffer) => {
 	alarm.setBuffer(buffer);
 });
 
-const alertbtn = document.getElementById("alert-btn");
-if (!alertbtn) throw new Error("Alert button not found");
-
-alertbtn.addEventListener("click", () => {
-	alertbtn.textContent = opening ? "⚠️ Set High Alert" : "⚠️ Set Low Alert";
-	opening = !opening;
-	if (opening) alarm.play();
-	play(opening);
-});
-
-// SHADOWS BUTTON
-let shadowsEnabled = true;
-
-const shadowbtn = document.getElementById("shadow-btn");
-if (!shadowbtn) throw new Error("Shadow button not found");
-
-shadowbtn.addEventListener("click", () => {
-	shadowsEnabled = !shadowsEnabled;
-	shadowbtn.textContent = shadowsEnabled ? "👤 Enable Shadows" : "👤 Disable Shadows";
-	shadows(shadowsEnabled);
+bindtoggle("alert-btn", true, "⚠️ Set Low Alert", "⚠️ Set High Alert", (value) => {
+	if (value) alarm.play();
+	play(value);
 });
