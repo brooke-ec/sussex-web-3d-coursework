@@ -34,9 +34,9 @@ const sounds = [
 
 	// Vehicle Sounds
 	{ file: "/assets/citadel/train_horn_distant.wav", min: 60, max: 150 },
-	{ file: "/assets/citadel/apc_distant1.wav", min: 5, max: 30 },
-	{ file: "/assets/citadel/apc_distant2.wav", min: 5, max: 30 },
-	{ file: "/assets/citadel/apc_distant3.wav", min: 5, max: 30 },
+	{ file: "/assets/citadel/apc_distant1.wav", min: 10, max: 30 },
+	{ file: "/assets/citadel/apc_distant2.wav", min: 10, max: 30 },
+	{ file: "/assets/citadel/apc_distant3.wav", min: 10, max: 30 },
 ];
 
 const loader = new THREE.AudioLoader();
@@ -68,7 +68,7 @@ loader.load("/assets/citadel/citadel_alert.wav", (buffer) => {
 	alarm.setBuffer(buffer);
 });
 
-bindtoggle("alert-btn", true, "⚠️ Set Low Alert", "⚠️ Set High Alert", (value) => {
+bindtoggle("alert-btn", false, "⚠️ Set Low Alert", "⚠️ Set High Alert", (value) => {
 	if (value) alarm.play();
 	play(value);
 });

@@ -1,6 +1,9 @@
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { TAARenderPass } from "three/examples/jsm/postprocessing/TAARenderPass.js";
+import { DotScreenShader } from "three/examples/jsm/shaders/DotScreenShader.js";
+import { RGBShiftShader } from "three/examples/jsm/shaders/RGBShiftShader.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
 import { GlitchPass } from "three/examples/jsm/postprocessing/GlitchPass.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
@@ -110,6 +113,10 @@ export function setup(container, options) {
 	glitch.goWild = true;
 	composer.addPass(glitch);
 
+	const chromatic = new ShaderPass(RGBShiftShader);
+	chromatic.uniforms["amount"].value = 0;
+	composer.addPass(chromatic);
+
 	composer.addPass(new OutputPass());
 
 	// SETUP AUDIO
@@ -184,12 +191,33 @@ export function setup(container, options) {
 		glitch.enabled = value;
 	});
 
-	bindtoggle("wireframe-btn", true, "▩ Disable Wireframe", "▩ Enable Wireframe", (value) => {
+	bindtoggle("wireframe-btn", false, "▩ Disable Wireframe", "▩ Enable Wireframe", (value) => {
 		scene.traverse((child) => {
 			if (child instanceof THREE.Mesh) {
-				child.material.wireframe = !value;
+				child.material.wireframe = value;
 			}
 		});
+	});
+
+	bindtoggle("orbit-btn", true, "🔄️ Disable Orbit", "🔄️ Enable Orbit", (value) => {
+		controls.autoRotate = value;
+	});
+
+	bindrange("chromatic-range", 0, 0, 0.05, 0.001, (value) => {
+		chromatic.uniforms["amount"].value = value;
+	});
+
+	const sunDistance = Math.sqrt(options.sun.x ** 2 + options.sun.y ** 2 + options.sun.z ** 2);
+	const initialAngle = Math.asin(options.sun.y / sunDistance);
+	const sunAzimuth = Math.atan2(options.sun.z, options.sun.x);
+
+	bindrange("sun-range", initialAngle, 0, Math.PI, 0.01, (angle) => {
+		const h = sunDistance * Math.cos(angle);
+		sun.position.set(h * Math.cos(sunAzimuth), sunDistance * Math.sin(angle), h * Math.sin(sunAzimuth));
+		shadowhelper.update();
+
+		const ratio = Math.max(0, Math.sin(angle));
+		sun.intensity = 4 * ratio;
 	});
 
 	return {
@@ -235,6 +263,30 @@ export function bindtoggle(id, value, textOn, textOff, callback) {
 	button.addEventListener("click", () => {
 		value = !value;
 		button.textContent = value ? textOn : textOff;
+		callback(value);
+	});
+}
+
+/**
+ * Helper to create a range input.
+ * @param {string} id The HTML id field of the range
+ * @param {number} value The initial value of the range
+ * @param {number} min The minimum value of the range
+ * @param {number} max The maximum value of the range
+ * @param {number} step The step value of the range
+ * @param {(value: number) => void} callback A callback that is called when the range value changes
+ * @returns
+ */
+export function bindrange(id, value, min, max, step, callback) {
+	const input = document.getElementById(id);
+	if (!(input instanceof HTMLInputElement)) return;
+
+	input.value = value.toString();
+	input.min = min.toString();
+	input.max = max.toString();
+	input.step = step.toString();
+	input.addEventListener("input", () => {
+		value = parseFloat(input.value);
 		callback(value);
 	});
 }
