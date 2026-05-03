@@ -166,10 +166,10 @@ void main() {
 	taa.unbiased = false;
 	composer.addPass(taa);
 
-	const glitch = new GlitchPass();
-	glitch.enabled = false;
-	glitch.goWild = true;
-	composer.addPass(glitch);
+	const glitchp = new GlitchPass();
+	glitchp.enabled = false;
+	glitchp.goWild = true;
+	composer.addPass(glitchp);
 
 	const chromatic = new ShaderPass(RGBShiftShader);
 	chromatic.uniforms["amount"].value = 0;
@@ -186,6 +186,12 @@ void main() {
 		ambience.setBuffer(buffer);
 		ambience.setLoop(true);
 		ambience.play();
+	});
+
+	const glitcha = new THREE.Audio(listener);
+	new THREE.AudioLoader().load("/assets/glitch.mp3", (buffer) => {
+		glitcha.setBuffer(buffer);
+		glitcha.setLoop(true);
 	});
 
 	// CREATE PLAY BUTTON
@@ -222,8 +228,10 @@ void main() {
 		shadowhelper.visible = value;
 	});
 
-	bindtoggle("glitch-btn", false, "👾 Disable Glitch Shader", "👾 Enable Glitch Shader", (value) => {
-		glitch.enabled = value;
+	bindtoggle("glitch-btn", false, "👾 Disable Glitch", "👾 Enable Glitch", (value) => {
+		glitchp.enabled = value;
+		if (value) glitcha.play();
+		else glitcha.stop();
 	});
 
 	bindtoggle("wireframe-btn", false, "▩ Disable Wireframe", "▩ Enable Wireframe", (value) => {
