@@ -41,11 +41,25 @@ body {
 		position: absolute;
 
 		display: flex;
-		flex-direction: column;
-		gap: 5px;
+		flex-direction: row;
 
-		background-color: var(--bs-tertiary-bg);
-		border-radius: 10px 0 0 10px;
-		padding: 10px;
+		align-items: center;
+
+		& > button {
+			background-color: var(--bs-tertiary-bg);
+			border-radius: 10px 0 0 10px;
+			height: fit-content;
+			font-size: 30px;
+		}
+
+		#controls-collapse > div {
+			background-color: var(--bs-tertiary-bg);
+			border-radius: 10px 0 0 10px;
+			padding: 10px 10px 10px 20px;
+
+			display: flex;
+			flex-direction: column;
+			gap: 5px;
+		}
 	}
 }
