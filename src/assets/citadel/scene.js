@@ -9,14 +9,7 @@ const { scene, listener, play } = setup(container, {
 	camera: { x: 1, y: 1, z: 13.5, target: { x: 0, y: 9, z: 0 }, speed: 0.25 },
 	ambience: { file: "/assets/citadel/ambience.wav", height: 10 },
 	sun: { x: -32, y: 30, z: 0, resolution: 25 },
-	skybox: [
-		"/assets/citadel/px.png", // right
-		"/assets/citadel/nx.png", // left
-		"/assets/citadel/py.png", // top
-		"/assets/citadel/ny.png", // bottom
-		"/assets/citadel/pz.png", // front
-		"/assets/citadel/nz.png", // back
-	],
+	skybox: "/assets/citadel/skybox.png",
 });
 
 /// RANDOM SOUNDS

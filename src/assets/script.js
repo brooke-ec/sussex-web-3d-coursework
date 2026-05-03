@@ -1,6 +1,5 @@
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { TAARenderPass } from "three/examples/jsm/postprocessing/TAARenderPass.js";
-import { DotScreenShader } from "three/examples/jsm/shaders/DotScreenShader.js";
 import { RGBShiftShader } from "three/examples/jsm/shaders/RGBShiftShader.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
@@ -22,7 +21,7 @@ import * as THREE from "three";
  * @property {{file: string, height: number}} ambience - Sound confuguration for the scene
  * @property {Position & {resolution: number}} sun - The position of the sun in the scene.
  * @property {{file: string, rotation: THREE.Euler}} model - The path to the GLTF model to load and its rotation.
- * @property {string[]} skybox - The paths to the skybox textures.
+ * @property {string} skybox - The path to the skybox texture.
  */
 
 /**
@@ -31,12 +30,79 @@ import * as THREE from "three";
  * @param {SceneOptions} options
  */
 export function setup(container, options) {
+	// SETUP RENDERER
+	const renderer = new THREE.WebGLRenderer();
+	renderer.setSize(container.clientWidth, container.clientHeight);
+	container.appendChild(renderer.domElement);
+
+	renderer.toneMapping = THREE.ACESFilmicToneMapping;
+	renderer.shadowMap.enabled = true;
+
 	// SETUP SCENE
 	const scene = new THREE.Scene();
 
-	const texture = new THREE.CubeTextureLoader().load(options.skybox);
-	scene.environment = texture;
-	scene.background = texture;
+	/** @type {() => void} */
+	let renderSkybox = () => {};
+
+	new THREE.TextureLoader().load(options.skybox, (texture) => {
+		texture.mapping = THREE.EquirectangularReflectionMapping;
+
+		// --- Render target (method 2) ---
+		const target = new THREE.WebGLRenderTarget(1024, 512);
+		target.texture.mapping = THREE.EquirectangularReflectionMapping;
+
+		// --- Offscreen scene + shader quad ---
+		const skyboxScene = new THREE.Scene();
+		const skyboxCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+		skyboxScene.add(skyboxCamera);
+
+		const material = new THREE.ShaderMaterial({
+			uniforms: {
+				uTexture: { value: texture },
+				uSunset: { value: 0 },
+			},
+			vertexShader: `
+varying vec2 vUv;
+void main() {
+	vUv = uv;
+	gl_Position = vec4(position, 1.0);
+}
+  `,
+			fragmentShader: `
+uniform sampler2D uTexture;
+uniform float uSunset;
+varying vec2 vUv;
+void main() {
+	vec4 base = texture2D(uTexture, vUv);
+
+	vec3 sunsetLow  = vec3(1.0,  0.38, 0.04);
+	vec3 sunsetMid  = vec3(0.95, 0.18, 0.08);
+	vec3 sunsetHigh = vec3(0.12, 0.04, 0.28);
+	vec3 sunset = mix(mix(sunsetLow, sunsetMid, vUv.y * 1.5), sunsetHigh, vUv.y);
+
+	float blueness = base.b / max(base.r, base.g) - 0.4;
+	vec3 result = mix(base.rgb, sunset, uSunset * blueness);
+	gl_FragColor = vec4(result, 1.0);
+}
+  `,
+			depthWrite: false,
+		});
+
+		skyboxScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material));
+		const pmrem = new THREE.PMREMGenerator(renderer);
+
+		renderSkybox = () => {
+			material.uniforms.uSunset.value = 1 - Math.min(dayratio * 2, 1);
+			renderer.setRenderTarget(target);
+			renderer.render(skyboxScene, skyboxCamera);
+			renderer.setRenderTarget(null);
+
+			target.texture.needsUpdate = true;
+			const pmremTex = pmrem.fromEquirectangular(target.texture).texture;
+			scene.background = pmremTex;
+			scene.environment = pmremTex;
+		};
+	});
 
 	// SETUP SUN
 	const sun = new THREE.DirectionalLight(0xfff1c4, 3);
@@ -63,14 +129,6 @@ export function setup(container, options) {
 	camera.position.x = options.camera.x;
 	camera.position.y = options.camera.y;
 	camera.position.z = options.camera.z;
-
-	// SETUP RENDERER
-	const renderer = new THREE.WebGLRenderer();
-	renderer.setSize(container.clientWidth, container.clientHeight);
-	container.appendChild(renderer.domElement);
-
-	renderer.toneMapping = THREE.ACESFilmicToneMapping;
-	renderer.shadowMap.enabled = true;
 
 	// SETUP CONTROLS
 	const controls = new OrbitControls(camera, renderer.domElement);
@@ -150,29 +208,6 @@ export function setup(container, options) {
 		});
 	}
 
-	// FUNCTIONALITY
-	window.addEventListener("resize", () => {
-		camera.aspect = container.clientWidth / container.clientHeight;
-		camera.updateProjectionMatrix();
-
-		renderer.setSize(container.clientWidth, container.clientHeight);
-		composer.setSize(container.clientWidth, container.clientHeight);
-	});
-
-	const timer = new THREE.Timer();
-
-	function animate() {
-		timer.update();
-		camera.position.y = Math.max(0.25, camera.position.y);
-		controls.update();
-
-		ambience.setVolume(0.2 + 0.25 * (1 - THREE.MathUtils.clamp(camera.position.y / options.ambience.height, 0, 1)));
-		mixer.update(timer.getDelta());
-		composer.render();
-	}
-
-	renderer.setAnimationLoop(animate);
-
 	// SETTINGS
 	bindtoggle("shadow-btn", true, "👤 Disable Shadows", "👤 Enable Shadows", (value) => {
 		renderer.shadowMap.enabled = value;
@@ -210,15 +245,40 @@ export function setup(container, options) {
 	const sunDistance = Math.sqrt(options.sun.x ** 2 + options.sun.y ** 2 + options.sun.z ** 2);
 	const initialAngle = Math.asin(options.sun.y / sunDistance);
 	const sunAzimuth = Math.atan2(options.sun.z, options.sun.x);
+	let dayratio = Math.max(0, Math.sin(initialAngle));
 
 	bindrange("sun-range", initialAngle, 0, Math.PI, 0.01, (angle) => {
 		const h = sunDistance * Math.cos(angle);
 		sun.position.set(h * Math.cos(sunAzimuth), sunDistance * Math.sin(angle), h * Math.sin(sunAzimuth));
 		shadowhelper.update();
 
-		const ratio = Math.max(0, Math.sin(angle));
-		sun.intensity = 4 * ratio;
+		dayratio = Math.max(0, Math.sin(angle));
+		sun.intensity = 4 * dayratio;
 	});
+
+	// FUNCTIONALITY
+	window.addEventListener("resize", () => {
+		camera.aspect = container.clientWidth / container.clientHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize(container.clientWidth, container.clientHeight);
+		composer.setSize(container.clientWidth, container.clientHeight);
+	});
+
+	const timer = new THREE.Timer();
+
+	function animate() {
+		timer.update();
+		camera.position.y = Math.max(0.25, camera.position.y);
+		controls.update();
+
+		renderSkybox();
+		ambience.setVolume(0.2 + 0.25 * (1 - THREE.MathUtils.clamp(camera.position.y / options.ambience.height, 0, 1)));
+		mixer.update(timer.getDelta());
+		composer.render();
+	}
+
+	renderer.setAnimationLoop(animate);
 
 	return {
 		scene,
