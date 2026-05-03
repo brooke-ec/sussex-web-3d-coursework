@@ -33,7 +33,19 @@ body {
 #scene {
 	min-height: 60vh;
 	display: flex;
-	justify-content: center;
+	justify-content: right;
 	align-items: center;
 	background-color: var(--bs-secondary-bg-subtle);
+
+	.controls {
+		position: absolute;
+
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+
+		background-color: var(--bs-tertiary-bg);
+		border-radius: 10px 0 0 10px;
+		padding: 10px;
+	}
 }

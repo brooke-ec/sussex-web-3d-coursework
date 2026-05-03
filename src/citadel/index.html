@@ -76,24 +76,29 @@
 		<!-- PAGE CONTENT -->
 		<main>
 			<!-- SCENE -->
-			<div id="scene"></div>
+			<div id="scene">
+				<div class="controls">
+					<h4>Actions</h4>
+					<button class="btn btn-secondary" id="alert-btn"></button>
+					<button class="btn btn-secondary" id="orbit-btn"></button>
+					<h4>Sunlight</h4>
+					<button class="btn btn-secondary" id="shadow-btn"></button>
+					<button class="btn btn-secondary" id="helper-btn"></button>
+					<label>
+						Time of Day
+						<input type="range" class="form-range" id="sun-range" />
+					</label>
+					<h4>Effects</h4>
+					<button class="btn btn-secondary" id="mute-btn"></button>
+					<button class="btn btn-secondary" id="wireframe-btn"></button>
+					<button class="btn btn-secondary" id="glitch-btn"></button>
+					<label>
+						Chromatic Aberration
+						<input type="range" class="form-range" id="chromatic-range" />
+					</label>
+				</div>
+			</div>
 			<script src="/assets/citadel/scene.js" type="module"></script>
-
-			<button class="btn btn-secondary" id="alert-btn"></button>
-			<button class="btn btn-secondary" id="shadow-btn"></button>
-			<button class="btn btn-secondary" id="wireframe-btn"></button>
-			<button class="btn btn-secondary" id="mute-btn"></button>
-			<button class="btn btn-secondary" id="helper-btn"></button>
-			<button class="btn btn-secondary" id="glitch-btn"></button>
-			<button class="btn btn-secondary" id="orbit-btn"></button>
-			<label>
-				Chromatic Aberration
-				<input type="range" class="form-range" id="chromatic-range" />
-			</label>
-			<label>
-				Time of Day
-				<input type="range" class="form-range" id="sun-range" />
-			</label>
 
 			<!-- CONTENT -->
 			<div class="container-fluid">
