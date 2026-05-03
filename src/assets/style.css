@@ -37,7 +37,7 @@ body {
 	align-items: center;
 	background-color: var(--bs-secondary-bg-subtle);
 
-	.controls {
+	#controls {
 		position: absolute;
 
 		display: flex;

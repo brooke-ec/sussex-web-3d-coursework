@@ -59,7 +59,7 @@ export function setup(container, options) {
 		const material = new THREE.ShaderMaterial({
 			uniforms: {
 				uTexture: { value: texture },
-				uSunset: { value: 0 },
+				uSunset: { value: null },
 			},
 			vertexShader: `
 varying vec2 vUv;
@@ -92,15 +92,18 @@ void main() {
 		const pmrem = new THREE.PMREMGenerator(renderer);
 
 		renderSkybox = () => {
-			material.uniforms.uSunset.value = 1 - Math.min(dayratio * 2, 1);
-			renderer.setRenderTarget(target);
-			renderer.render(skyboxScene, skyboxCamera);
-			renderer.setRenderTarget(null);
+			const uSunset = 1 - Math.min(dayratio * 2, 1);
+			if (uSunset != material.uniforms.uSunset.value) {
+				material.uniforms.uSunset.value = uSunset;
+				renderer.setRenderTarget(target);
+				renderer.render(skyboxScene, skyboxCamera);
+				renderer.setRenderTarget(null);
 
-			target.texture.needsUpdate = true;
-			const pmremTex = pmrem.fromEquirectangular(target.texture).texture;
-			scene.background = pmremTex;
-			scene.environment = pmremTex;
+				target.texture.needsUpdate = true;
+				const pmremTex = pmrem.fromEquirectangular(target.texture).texture;
+				scene.background = pmremTex;
+				scene.environment = pmremTex;
+			}
 		};
 	});
 
@@ -197,6 +200,8 @@ void main() {
 	// CREATE PLAY BUTTON
 	if (ambience.context.state === "suspended") {
 		renderer.domElement.style.pointerEvents = "none";
+		const controls = document.getElementById("controls");
+		if (controls) controls.style.display = "none";
 
 		const button = document.createElement("button");
 		button.textContent = "🔇";
@@ -208,7 +213,8 @@ void main() {
 		container.appendChild(button);
 
 		button.addEventListener("click", () => {
-			renderer.domElement.style.pointerEvents = "auto";
+			renderer.domElement.style.pointerEvents = "";
+			if (controls) controls.style.display = "";
 			listener.context.resume();
 			button.remove();
 		});
