@@ -146,7 +146,6 @@ void main() {
 
 	/** @type {THREE.AnimationClip[]} */
 	let clips = [];
-	let playForward = true;
 
 	new GLTFLoader().load("/assets/citadel/scene.glb", (gltf) => {
 		clips = gltf.animations;
