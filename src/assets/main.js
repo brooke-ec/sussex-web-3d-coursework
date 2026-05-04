@@ -9,7 +9,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from "three";
 
 /**
- * @typedef {Object} Position
+ * @typedef {Object} Vec3
  * @property {number} x
  * @property {number} y
  * @property {number} z
@@ -17,11 +17,12 @@ import * as THREE from "three";
 
 /**
  * @typedef {Object} SceneOptions
- * @property {Position & {target: Position, speed: number}} camera - Camera configuration.
+ * @property {Vec3 & {target: Vec3, speed: number}} camera - Camera configuration.
  * @property {{file: string, height: number}} ambience - Sound confuguration for the scene
- * @property {Position & {resolution: number}} sun - The position of the sun in the scene.
- * @property {{file: string, rotation: THREE.Euler}} model - The path to the GLTF model to load and its rotation.
+ * @property {Vec3 & {resolution: number}} sun - The position of the sun in the scene.
+ * @property {{file: string, rotation?: THREE.Euler, offset?: Vec3}} model - The path to the GLTF model to load and its tranformation.
  * @property {string} skybox - The path to the skybox texture.
+ * @property {() => void} [animate] - A function that is called every frame, just before rendering.
  */
 
 /**
@@ -72,11 +73,12 @@ void main() {
 uniform sampler2D uTexture;
 uniform float uSunset;
 varying vec2 vUv;
+
 void main() {
 	vec4 base = texture2D(uTexture, vUv);
 
 	vec3 sunsetLow  = vec3(1.0,  0.38, 0.04);
-	vec3 sunsetMid  = vec3(0.95, 0.18, 0.08);
+	vec3 sunsetMid  = vec3(0.95, 0.38, 0.28);
 	vec3 sunsetHigh = vec3(0.12, 0.04, 0.28);
 	vec3 sunset = mix(mix(sunsetLow, sunsetMid, vUv.y * 1.5), sunsetHigh, vUv.y);
 
@@ -156,8 +158,10 @@ void main() {
 			}
 		});
 
-		gltf.scene.setRotationFromEuler(options.model.rotation);
 		scene.add(gltf.scene);
+		if (options.model.rotation) gltf.scene.setRotationFromEuler(options.model.rotation);
+		if (options.model.offset)
+			gltf.scene.position.set(options.model.offset.x, options.model.offset.y, options.model.offset.z);
 	});
 
 	// SETUP POST-PROCESSING
@@ -288,6 +292,8 @@ void main() {
 		renderSkybox();
 		ambience.setVolume(0.2 + 0.25 * (1 - THREE.MathUtils.clamp(camera.position.y / options.ambience.height, 0, 1)));
 		mixer.update(timer.getDelta());
+
+		if (options.animate) options.animate();
 		composer.render();
 	}
 
@@ -295,6 +301,7 @@ void main() {
 
 	return {
 		scene,
+		timer,
 		camera,
 		renderer,
 		listener,
