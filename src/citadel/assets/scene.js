@@ -1,35 +1,35 @@
-import { bindtoggle, setup } from "../script.js";
+import { bindtoggle, setup } from "../../assets/main.js";
 import * as THREE from "three";
 
 const container = document.getElementById("scene");
 if (!container) throw new Error("Scene container not found");
 
 const { scene, listener, play } = setup(container, {
-	model: { file: "/assets/citadel/scene.gltf", rotation: new THREE.Euler(0, -Math.PI / 2, 0) },
+	model: { file: "./assets/scene.glb", rotation: new THREE.Euler(0, -Math.PI / 2, 0) },
 	camera: { x: 1, y: 1, z: 13.5, target: { x: 0, y: 9, z: 0 }, speed: 0.25 },
-	ambience: { file: "/assets/citadel/ambience.wav", height: 10 },
+	ambience: { file: "./assets/ambience.wav", height: 10 },
 	sun: { x: -32, y: 30, z: 0, resolution: 25 },
-	skybox: "/assets/citadel/skybox.png",
+	skybox: "./assets/skybox.png",
 });
 
 /// RANDOM SOUNDS
 
 const sounds = [
 	// Overwatch Announcements
-	{ file: "/assets/citadel/offworldrelocation_spkr.wav", min: 30, max: 60 },
-	{ file: "/assets/citadel/confirmcivilstatus_spkr.wav", min: 30, max: 60 },
-	{ file: "/assets/citadel/sociolevel_spkr.wav", min: 30, max: 60 },
+	{ file: "./assets/offworldrelocation_spkr.wav", min: 30, max: 60 },
+	{ file: "./assets/confirmcivilstatus_spkr.wav", min: 30, max: 60 },
+	{ file: "./assets/sociolevel_spkr.wav", min: 30, max: 60 },
 
 	// Alarm Sounds
-	{ file: "/assets/citadel/scanner_alert_pass.wav", min: 60, max: 120 },
-	{ file: "/assets/citadel/manhack_alert_pass.wav", min: 60, max: 120 },
-	{ file: "/assets/citadel/apc_alarm_pass.wav", min: 60, max: 120 },
+	{ file: "./assets/scanner_alert_pass.wav", min: 60, max: 120 },
+	{ file: "./assets/manhack_alert_pass.wav", min: 60, max: 120 },
+	{ file: "./assets/apc_alarm_pass.wav", min: 60, max: 120 },
 
 	// Vehicle Sounds
-	{ file: "/assets/citadel/train_horn_distant.wav", min: 60, max: 150 },
-	{ file: "/assets/citadel/apc_distant1.wav", min: 10, max: 30 },
-	{ file: "/assets/citadel/apc_distant2.wav", min: 10, max: 30 },
-	{ file: "/assets/citadel/apc_distant3.wav", min: 10, max: 30 },
+	{ file: "./assets/train_horn_distant.wav", min: 60, max: 150 },
+	{ file: "./assets/apc_distant1.wav", min: 10, max: 30 },
+	{ file: "./assets/apc_distant2.wav", min: 10, max: 30 },
+	{ file: "./assets/apc_distant3.wav", min: 10, max: 30 },
 ];
 
 const loader = new THREE.AudioLoader();
@@ -57,7 +57,7 @@ for (const sound of sounds) {
 // ALERT BUTTON
 
 const alarm = new THREE.Audio(listener);
-loader.load("/assets/citadel/citadel_alert.wav", (buffer) => {
+loader.load("./assets/citadel_alert.wav", (buffer) => {
 	alarm.setBuffer(buffer);
 });
 

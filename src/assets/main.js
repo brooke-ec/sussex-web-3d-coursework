@@ -147,7 +147,7 @@ void main() {
 	/** @type {THREE.AnimationClip[]} */
 	let clips = [];
 
-	new GLTFLoader().load("/assets/citadel/scene.glb", (gltf) => {
+	new GLTFLoader().load(options.model.file, (gltf) => {
 		clips = gltf.animations;
 		gltf.scene.traverse(function (child) {
 			if (child instanceof THREE.Mesh) {
