@@ -9,9 +9,9 @@ if (!container) throw new Error("Scene container not found");
 const { scene, timer, listener } = setup(container, {
 	model: { file: "./assets/scene.glb", offset: { x: 0, y: -10, z: 0 } },
 	camera: { x: -10, y: 5, z: 40, target: { x: 0, y: 9, z: 0 }, speed: 0.25 },
-	ambience: { file: "./assets/ambience.wav", height: 50 },
+	ambience: { file: "./assets/ambience.ogg", height: 50 },
 	sun: { x: -32, y: 30, z: 10, size: 25 },
-	skybox: "./assets/skybox.png",
+	skybox: "./assets/skybox.webp",
 	animate() {
 		animateClouds(timer.getDelta());
 		particles.update(timer.getDelta());
@@ -40,10 +40,10 @@ const loader = new THREE.AudioLoader();
 	scene.add(thunderLight);
 
 	const sounds = await Promise.all([
-		loader.loadAsync("./assets/thunder1.mp3"),
-		loader.loadAsync("./assets/thunder2.mp3"),
-		loader.loadAsync("./assets/thunder3.mp3"),
-		loader.loadAsync("./assets/thunder4.mp3"),
+		loader.loadAsync("./assets/thunder1.ogg"),
+		loader.loadAsync("./assets/thunder2.ogg"),
+		loader.loadAsync("./assets/thunder3.ogg"),
+		loader.loadAsync("./assets/thunder4.ogg"),
 	]);
 
 	const thunderSound = new THREE.PositionalAudio(listener);

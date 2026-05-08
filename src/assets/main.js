@@ -1,5 +1,6 @@
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { TAARenderPass } from "three/examples/jsm/postprocessing/TAARenderPass.js";
+import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
 import { RGBShiftShader } from "three/examples/jsm/shaders/RGBShiftShader.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
@@ -148,7 +149,7 @@ void main() {
 	/** @type {THREE.AnimationClip[]} */
 	let clips = [];
 
-	new GLTFLoader().load(options.model.file, (gltf) => {
+	new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load(options.model.file, (gltf) => {
 		clips = gltf.animations;
 		gltf.scene.traverse(function (child) {
 			if (child instanceof THREE.Mesh) {
