@@ -190,6 +190,7 @@ void main() {
 	const ambience = new THREE.Audio(listener);
 	new THREE.AudioLoader().load(options.ambience.file, (buffer) => {
 		ambience.setBuffer(buffer);
+		ambience.setVolume(0.1);
 		ambience.setLoop(true);
 		ambience.play();
 	});

@@ -3,7 +3,8 @@ import * as THREE from "three";
 
 const size = 1024;
 const scale = 0.05;
-const count = 16;
+const count = 6;
+const distance = 640;
 
 /**
  * Creates a layered cloud effect using a
@@ -21,7 +22,7 @@ export function createClouds(scene) {
 		const data = new Uint8ClampedArray(size * size * 4);
 		for (let x = 0; x < size; x++) {
 			for (let y = 0; y < size; y++) {
-				const sample = min + diff * perlin.noise((x * scale) / 1.5, index * 10, (y * scale) / 1.5);
+				const sample = min + diff * perlin.noise((x * scale) / 1.5, index * 100, (y * scale) / 1.5);
 				data[i] = sample; // R
 				data[i + 1] = sample; // G
 				data[i + 2] = sample; // B
@@ -40,11 +41,11 @@ export function createClouds(scene) {
 		const material = new THREE.MeshBasicMaterial({
 			map: texture,
 			transparent: true,
-			opacity: 0.75,
+			opacity: 1,
 			depthWrite: false,
 		});
 
-		const geometry = new THREE.PlaneGeometry(320, 320);
+		const geometry = new THREE.PlaneGeometry(distance, distance);
 		const plane = new THREE.Mesh(geometry, material);
 		plane.rotation.x = -Math.PI / 2;
 
