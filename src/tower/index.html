@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Megastructure Archive</title>
+
+		<link rel="stylesheet" href="/assets/main.css" />
+
+		<!-- LIBRARIES -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+			crossorigin="anonymous"
+		/>
+
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "https://cdn.jsdelivr.net/npm/three@v0.184.0/build/three.module.js",
+					"three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@v0.184.0/examples/jsm/",
+					"three-nebula": "https://cdn.jsdelivr.net/npm/three-nebula@10.0.3/+esm"
+				}
+			}
+		</script>
+	</head>
+
+	<body>
+		<!-- HEADER -->
+		<nav class="navbar navbar-expand-lg bg-body-tertiary">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="/">Megastructure Archive</a>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navlinks"
+					aria-controls="navbarSupportedContent"
+					aria-expanded="false"
+					aria-label="Toggle navigation"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navlinks">
+					<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link" href="/">Home</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="/about/">About</a>
+						</li>
+
+						<li class="nav-item dropdown">
+							<a
+								class="nav-link dropdown-toggle"
+								href="#"
+								role="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
+							>
+								Megastructures
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="/iterator/">Iterator</a></li>
+								<li><a class="dropdown-item" href="/citadel/">The Citadel</a></li>
+								<li><a class="dropdown-item" href="/tower/">The Tower</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<!-- PAGE CONTENT -->
+		<main>
+			<!-- SCENE -->
+			<div id="scene">
+				<script src="assets/scene.js" type="module"></script>
+
+				<div id="controls">
+					<button
+						class="btn"
+						type="button"
+						aria-expanded="false"
+						data-bs-toggle="collapse"
+						data-bs-target="#controls-collapse"
+						aria-controls="controls-collapse"
+					>
+						←
+					</button>
+					<div id="controls-collapse" class="collapse collapse-horizontal">
+						<div style="width: 300px">
+							<h4>Actions</h4>
+							<button class="btn btn-secondary" id="destroy-btn"></button>
+							<button class="btn btn-secondary" id="orbit-btn"></button>
+							<h4>Sunlight</h4>
+							<button class="btn btn-secondary" id="helper-btn"></button>
+							<label>
+								Time of Day
+								<input type="range" class="form-range" id="sun-range" />
+							</label>
+							<h4>Effects</h4>
+							<button class="btn btn-secondary" id="mute-btn"></button>
+							<button class="btn btn-secondary" id="wireframe-btn"></button>
+							<button class="btn btn-secondary" id="glitch-btn"></button>
+							<label>
+								Chromatic Aberration
+								<input type="range" class="form-range" id="chromatic-range" />
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- CONTENT -->
+			<div class="container-fluid">
+				<h1>The Tower</h1>
+			</div>
+		</main>
+
+		<!-- FOOTER -->
+		<nav class="navbar fixed-bottom bg-body-tertiary">
+			<div class="container-fluid">
+				<div class="navbar-text" href="#">
+					&copy 2026 Brooke Reavell - Developed as a part of my 3D Web Applications Module
+				</div>
+			</div>
+		</nav>
+
+		<br /><br /><br /><br />
+
+		<!-- LIBRARIES -->
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>

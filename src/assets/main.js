@@ -19,7 +19,7 @@ import * as THREE from "three";
  * @typedef {Object} SceneOptions
  * @property {Vec3 & {target: Vec3, speed: number}} camera - Camera configuration.
  * @property {{file: string, height: number}} ambience - Sound confuguration for the scene
- * @property {Vec3 & {resolution: number}} sun - The position of the sun in the scene.
+ * @property {Vec3 & {size: number, shadows?: boolean}} sun - The position of the sun in the scene.
  * @property {{file: string, rotation?: THREE.Euler, offset?: Vec3}} model - The path to the GLTF model to load and its tranformation.
  * @property {string} skybox - The path to the skybox texture.
  * @property {() => void} [animate] - A function that is called every frame, just before rendering.
@@ -37,7 +37,7 @@ export function setup(container, options) {
 	container.appendChild(renderer.domElement);
 
 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
-	renderer.shadowMap.enabled = true;
+	renderer.shadowMap.enabled = options.sun.shadows ?? true;
 
 	// SETUP SCENE
 	const scene = new THREE.Scene();
@@ -113,16 +113,16 @@ void main() {
 	const sun = new THREE.DirectionalLight(0xfff1c4, 3);
 	sun.position.set(options.sun.x, options.sun.y, options.sun.z);
 
-	sun.shadow.camera.top = options.sun.resolution;
-	sun.shadow.camera.bottom = -options.sun.resolution;
-	sun.shadow.camera.left = options.sun.resolution;
-	sun.shadow.camera.right = -options.sun.resolution;
+	sun.shadow.camera.top = options.sun.size;
+	sun.shadow.camera.bottom = -options.sun.size;
+	sun.shadow.camera.left = options.sun.size;
+	sun.shadow.camera.right = -options.sun.size;
 
-	sun.shadow.mapSize.width = (128 * options.sun.resolution) / 5;
-	sun.shadow.mapSize.height = (128 * options.sun.resolution) / 5;
+	sun.shadow.mapSize.width = (128 * options.sun.size) / 5;
+	sun.shadow.mapSize.height = (128 * options.sun.size) / 5;
 
 	sun.shadow.bias = -0.001;
-	sun.castShadow = true;
+	sun.castShadow = options.sun.shadows ?? true;
 	scene.add(sun);
 
 	const shadowhelper = new THREE.CameraHelper(sun.shadow.camera);

@@ -8,7 +8,7 @@ const { scene, listener, play } = setup(container, {
 	model: { file: "./assets/scene.glb", rotation: new THREE.Euler(0, -Math.PI / 2, 0) },
 	camera: { x: 1, y: 1, z: 13.5, target: { x: 0, y: 9, z: 0 }, speed: 0.25 },
 	ambience: { file: "./assets/ambience.wav", height: 10 },
-	sun: { x: -32, y: 30, z: 0, resolution: 25 },
+	sun: { x: -32, y: 30, z: 0, size: 25 },
 	skybox: "./assets/skybox.png",
 });
 
