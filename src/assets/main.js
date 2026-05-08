@@ -48,11 +48,9 @@ export function setup(container, options) {
 	new THREE.TextureLoader().load(options.skybox, (texture) => {
 		texture.mapping = THREE.EquirectangularReflectionMapping;
 
-		// --- Render target (method 2) ---
 		const target = new THREE.WebGLRenderTarget(1024, 512);
 		target.texture.mapping = THREE.EquirectangularReflectionMapping;
 
-		// --- Offscreen scene + shader quad ---
 		const skyboxScene = new THREE.Scene();
 		const skyboxCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 		skyboxScene.add(skyboxCamera);
@@ -64,6 +62,7 @@ export function setup(container, options) {
 			},
 			vertexShader: `
 varying vec2 vUv;
+
 void main() {
 	vUv = uv;
 	gl_Position = vec4(position, 1.0);
