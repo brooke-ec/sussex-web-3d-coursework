@@ -69,3 +69,25 @@ body {
 	max-width: 50vw;
 	width: auto;
 }
+
+h1 {
+	border-bottom: 1px solid var(--bs-secondary-bg);
+	padding-bottom: 5px;
+}
+
+sup a {
+	text-decoration: none;
+}
+
+.shiki {
+	padding: 10px;
+	margin-bottom: 0;
+}
+
+[data-shiki] {
+	background-color: var(--bs-primary-bg-subtle);
+	border-radius: 10px;
+	overflow: hidden;
+	white-space: pre;
+	margin-bottom: 1rem;
+}

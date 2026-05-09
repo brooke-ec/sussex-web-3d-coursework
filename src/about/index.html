@@ -21,7 +21,8 @@
 				"imports": {
 					"three": "https://cdn.jsdelivr.net/npm/three@v0.184.0/build/three.module.js",
 					"three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@v0.184.0/examples/jsm/",
-					"three-nebula": "https://cdn.jsdelivr.net/npm/three-nebula@10.0.3/+esm"
+					"three-nebula": "https://cdn.jsdelivr.net/npm/three-nebula@10.0.3/+esm",
+					"shiki": "https://esm.sh/shiki@4.0.2"
 				}
 			}
 		</script>
@@ -94,7 +95,7 @@
 					<a class="nav-link" href="./tower/">The Tower</a>
 				</li>
 			</ul>
-			<div class="border border-top-0 p-3">
+			<div class="border border-top-0 p-3 clearfix">
 				<h1>About</h1>
 				<p>
 					For my website I have created an archive showcasing my favourite
@@ -106,6 +107,10 @@
 				</p>
 
 				<h1>Design</h1>
+				<div class="float-end me-4 d-flex flex-column justify-content-center">
+					<img src="../assets/favicon.svg" class="img-y figure-img" alt="megastructure archive favicon" />
+					<figcaption class="figure-caption">Figure 1: The favicon used for the website.</figcaption>
+				</div>
 				<p>
 					This website uses <a href="https://getbootstrap.com/">Bootstrap</a> for the layout and styling. It
 					makes heavy use of Bootstrap's list of pre-made components, supplemented with custom CSS for
@@ -114,10 +119,112 @@
 					<a href="https://getbootstrap.com/docs/5.3/components/navbar/">Bootstrap documentation</a>, and
 					supports a dropdown and a hamburger menu for mobile devices. The tabs on the about pages are also
 					Bootstrap components in addition to their grid system which is used to create the responsive layout
-					of all pages. The <a href="/">home page</a> makes use of three Bootstrap card components to display
-					a preview of each megastructure.
+					of all pages.
 				</p>
+				<p>
+					The website uses Bootstrap's inbuilt color scheme for its good contrast and readability. Bootstrap's
+					dark theme was chosen as it fits the theme of the website and was enabled by adding the attribute
+					<code>data-bs-theme="dark"</code> to the root HTML element.
+				</p>
+				<p>
+					The favicon for the website is a scalable vector graphic of
+					<a href="../citadel/">the Citadel</a> designed by me using
+					<a href="https://www.figma.com/">Figma</a>. This involved using a reference image of the Citadel to
+					guide the placement and shape of various polygons and bezier curves to create a simplified but
+					recognisable depiction of the Citadel.
+				</p>
+				<p>
+					These about pages use the <a href="https://shiki.style/">Shiki</a> code renderer for the code
+					snippets located throughout them.
+				</p>
+				<h2>Home Page</h2>
+				<p>
+					The website's <a href="../">home page</a> uses three
+					<a href="https://getbootstrap.com/docs/5.3/components/card/">Bootstrap cards</a> to display a
+					preview of each megastructure model along with a blurb. These are contained in a fluid grid layout,
+					allowing them to wrap when the screen is too small. The images for these cards are renders of each
+					model using Blender's cycles rendering engine. These renders often include additional elements not
+					found in the 3D view such as volumetric fog and procedural environments. For more information, see
+					the other tabs on this page.
+				</p>
+				<p>
+					The home page features a full-width hero image with a custom parallax script taken from one of my
+					previous projects. The parallax effect is controlled using both the scroll position and the mouse
+					position to create a more dynamic and interactive experience.
+				</p>
+				<p>
+					All images on the website have been converted to the
+					<a href="https://en.wikipedia.org/wiki/WebP">WebP</a> format for better compression and faster
+					loading times. WebP files are an average of 26% smaller than the same image encoded as a PNG
+					file<sup><a href="https://developers.google.com/speed/webp">[1]</a></sup> improving performance for
+					devices with slow connections. Additionally, the images on the home page are thumbnails of the
+					original renders to further improve loading times. All images use CSS to resize when the screen size
+					changes.
+				</p>
+				<h1>Shared Functionality</h1>
+				<p>
+					To enable the use of modern three.js features, this website uses
+					<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">
+						JavaScript modules
+					</a>
+					and import maps as detailed on the
+					<a href="https://threejs.org/manual/#en/installation">three.js installation guide</a>. Additionally,
+					my development environment includes a basic <code>package.json</code> which can be used with the
+					node package manager to provide type hints for the IDE.
+				</p>
+				<p>
+					All three megastructure pages display their models using
+					<a href="https://threejs.org/">three.js</a>. Due to their similarities in design and functionality,
+					a shared JavaScript module is used to reduce the amount of duplicate code. This module contains a
+					function that handles all the basic setup and functionality for each page. Each page can configure
+					the setup using an options object passed to the initialisation function. The JSDoc type definition
+					of this object can be seen below:
+				</p>
+
+				<!-- prettier-ignore -->
+				<div data-shiki="javascript">
+				/**
+				* @typedef {Object} SceneOptions
+				* @property {{x: number, y: number, z: number, target: Vec3, speed: number}} camera - Camera configuration.
+				* @property {{file: string, height: number}} ambience - Sound confuguration for the scene
+				* @property {{x: number, y: number, z: number, size: number, shadows?: boolean}} sun - The position of the sun in the scene.
+				* @property {{file: string, rotation?: THREE.Euler, offset?: Vec3}} model - The path to the GLTF model to load and its tranformation.
+				* @property {string} skybox - The path to the skybox texture.
+				* @property {() => void} [animate] - A function that is called every frame, just before rendering.
+				*/
+				</div>
+				<h2>Interactivity</h2>
+				<p>
+					Every model has a selection of shared interactivity features. As a result, these features are
+					implemented in the shared JavaScript module. These include basic features we were taught in lab such
+					as toggling wireframe mode or orbit controls as well as more complex features such as enabling a
+					glitch shader.
+				</p>
+				<p>
+					Many interactivity features are hidden by default using
+					<a href="https://getbootstrap.com/docs/5.3/components/collapse/">Bootstrap's collapse component</a>.
+					A control panel can be expanded by
+					<strong>clicking the button on the right side of the canvas</strong>.
+				</p>
+				<h3>Ambience</h3>
+				<p>
+					The ambience system dynamically increases and decreases the volume of a looping sound effect based
+					on the camera's current height. This is distinct from three.js's
+					<a href="https://threejs.org/docs/#PositionalAudio">positional audio system</a> where volume is
+					based on the camera's distance from a single point, instead of it's height. This gives the
+					impression that the sound is coming from the ground, which is appropriate for the sounds used on
+					this website. The equation used to calculate the volume is as follows:
+				</p>
+				<math xmlns="http://www.w3.org/1998/Math/MathML"
+					><mn>0.2</mn><mo>+</mo><mn>0.25</mn><mo>(</mo><mn>1</mn><mo>-</mo><mi>c</mi><mi>l</mi><mi>a</mi
+					><mi>m</mi><mi>p</mi><mo>(</mo
+					><mfrac
+						><mi>y</mi><mrow><mi>h</mi><mi>e</mi><mi>i</mi><mi>g</mi><mi>h</mi><mi>t</mi></mrow></mfrac
+					><mo>)</mo><mo>)</mo></math
+				>
 			</div>
+
+			<script src="./assets/about.js" type="module" />
 		</main>
 
 		<!-- FOOTER -->
