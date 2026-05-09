@@ -63,3 +63,9 @@ body {
 		}
 	}
 }
+
+.img-y {
+	max-height: 300px;
+	max-width: 50vw;
+	width: auto;
+}
