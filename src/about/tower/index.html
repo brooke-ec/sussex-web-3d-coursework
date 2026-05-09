@@ -79,78 +79,23 @@
 		</nav>
 
 		<!-- PAGE CONTENT -->
-		<main>
-			<!-- SCENE -->
-			<div id="scene">
-				<script src="assets/scene.js" type="module"></script>
-
-				<div id="controls">
-					<button
-						class="btn"
-						type="button"
-						aria-expanded="false"
-						data-bs-toggle="collapse"
-						data-bs-target="#controls-collapse"
-						aria-controls="controls-collapse"
-					>
-						←
-					</button>
-					<div id="controls-collapse" class="collapse collapse-horizontal">
-						<div style="width: 300px">
-							<h4>Actions</h4>
-							<button class="btn btn-secondary" id="destroy-btn"></button>
-							<button class="btn btn-secondary" id="orbit-btn"></button>
-							<h4>Sunlight</h4>
-							<button class="btn btn-secondary" id="helper-btn"></button>
-							<label>
-								Time of Day
-								<input type="range" class="form-range" id="sun-range" />
-							</label>
-							<h4>Effects</h4>
-							<button class="btn btn-secondary" id="mute-btn"></button>
-							<button class="btn btn-secondary" id="wireframe-btn"></button>
-							<button class="btn btn-secondary" id="glitch-btn"></button>
-							<label>
-								Chromatic Aberration
-								<input type="range" class="form-range" id="chromatic-range" />
-							</label>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- CONTENT -->
-			<div class="container-fluid mt-2">
-				<h1>The Tower</h1>
-
-				<div class="clearfix">
-					<div class="row">
-						<div class="col-sm mt-4">
-							<p>
-								The Tower is a large structure suspended above a ruined city. It was made by sentient
-								machine-lifeforms in the 120th century. It resembles a twisted tree, and is made out of
-								a pure white material suspended by three large pillars on the outskirts of the city.
-							</p>
-							<p>
-								The Tower was originally planned as a colossal cannon built to destroy the lunar base
-								that the last of humanity had fled to. It was hoped that this would win the war between
-								the machines and androids. However, due to the events of NieR: Automata, the tower was
-								repurposed to launch an "ark" containing the memories of the machine lifeforms to a new
-								planet to inhabit.
-							</p>
-						</div>
-						<div class="float-end me-4">
-							<img
-								src="./assets/original.webp"
-								class="img-fluid figure-img"
-								alt="The Tower as seen in NieR: Automata."
-							/>
-							<figcaption class="figure-caption">
-								Figure 1: The Tower as seen in NieR: Automata.
-							</figcaption>
-						</div>
-					</div>
-				</div>
+		<main class="m-2">
+			<ul class="nav nav-tabs">
+				<li class="nav-item">
+					<a class="nav-link" href="..">General</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="../citadel/">Citadel</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="../iterator/">Iterator</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page">The Tower</a>
+				</li>
+			</ul>
+			<div class="border border-top-0 p-3">
+				<h1>About</h1>
 			</div>
 		</main>
 

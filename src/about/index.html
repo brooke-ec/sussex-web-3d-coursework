@@ -79,78 +79,44 @@
 		</nav>
 
 		<!-- PAGE CONTENT -->
-		<main>
-			<!-- SCENE -->
-			<div id="scene">
-				<script src="assets/scene.js" type="module"></script>
+		<main class="m-2">
+			<ul class="nav nav-tabs">
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page">General</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="./citadel/">Citadel</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="./iterator/">Iterator</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="./tower/">The Tower</a>
+				</li>
+			</ul>
+			<div class="border border-top-0 p-3">
+				<h1>About</h1>
+				<p>
+					For my website I have created an archive showcasing my favourite
+					<a href="https://en.wikipedia.org/wiki/Megastructure">megastructures</a>
+					from fiction. I have created three models of these megastructures using the 3D modelling software
+					<a href="https://www.blender.org/">Blender</a>. You can explore the modelling process and
+					interactivity development for each model using the tabs above. This tab will explore the general
+					design and implementation decisions shared by all three models.
+				</p>
 
-				<div id="controls">
-					<button
-						class="btn"
-						type="button"
-						aria-expanded="false"
-						data-bs-toggle="collapse"
-						data-bs-target="#controls-collapse"
-						aria-controls="controls-collapse"
-					>
-						←
-					</button>
-					<div id="controls-collapse" class="collapse collapse-horizontal">
-						<div style="width: 300px">
-							<h4>Actions</h4>
-							<button class="btn btn-secondary" id="destroy-btn"></button>
-							<button class="btn btn-secondary" id="orbit-btn"></button>
-							<h4>Sunlight</h4>
-							<button class="btn btn-secondary" id="helper-btn"></button>
-							<label>
-								Time of Day
-								<input type="range" class="form-range" id="sun-range" />
-							</label>
-							<h4>Effects</h4>
-							<button class="btn btn-secondary" id="mute-btn"></button>
-							<button class="btn btn-secondary" id="wireframe-btn"></button>
-							<button class="btn btn-secondary" id="glitch-btn"></button>
-							<label>
-								Chromatic Aberration
-								<input type="range" class="form-range" id="chromatic-range" />
-							</label>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- CONTENT -->
-			<div class="container-fluid mt-2">
-				<h1>The Tower</h1>
-
-				<div class="clearfix">
-					<div class="row">
-						<div class="col-sm mt-4">
-							<p>
-								The Tower is a large structure suspended above a ruined city. It was made by sentient
-								machine-lifeforms in the 120th century. It resembles a twisted tree, and is made out of
-								a pure white material suspended by three large pillars on the outskirts of the city.
-							</p>
-							<p>
-								The Tower was originally planned as a colossal cannon built to destroy the lunar base
-								that the last of humanity had fled to. It was hoped that this would win the war between
-								the machines and androids. However, due to the events of NieR: Automata, the tower was
-								repurposed to launch an "ark" containing the memories of the machine lifeforms to a new
-								planet to inhabit.
-							</p>
-						</div>
-						<div class="float-end me-4">
-							<img
-								src="./assets/original.webp"
-								class="img-fluid figure-img"
-								alt="The Tower as seen in NieR: Automata."
-							/>
-							<figcaption class="figure-caption">
-								Figure 1: The Tower as seen in NieR: Automata.
-							</figcaption>
-						</div>
-					</div>
-				</div>
+				<h1>Design</h1>
+				<p>
+					This website uses <a href="https://getbootstrap.com/">Bootstrap</a> for the layout and styling. It
+					makes heavy use of Bootstrap's list of pre-made components, supplemented with custom CSS for
+					elements not possible to achieve with Bootstrap alone. The navigation bar at the top of the page is
+					taken directly from the
+					<a href="https://getbootstrap.com/docs/5.3/components/navbar/">Bootstrap documentation</a>, and
+					supports a dropdown and a hamburger menu for mobile devices. The tabs on the about pages are also
+					Bootstrap components in addition to their grid system which is used to create the responsive layout
+					of all pages. The <a href="/">home page</a> makes use of three Bootstrap card components to display
+					a preview of each megastructure.
+				</p>
 			</div>
 		</main>
 
