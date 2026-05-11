@@ -94,8 +94,18 @@
 				<li class="nav-item">
 					<a class="nav-link" href="./tower/">The Tower</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="./sources/">Sources</a>
+				</li>
 			</ul>
 			<div class="border border-top-0 p-3 clearfix">
+				<h1>Statement of Originality</h1>
+				<p>
+					This website is submitted as part requirement for the degree of Computer Science at the University
+					of Sussex. It is the product of my own labour except where indicated in the text. Please see the
+					<a href="./sources/">sources page</a> for a full list of sources used in the creation of this
+					website.
+				</p>
 				<h1>About</h1>
 				<p>
 					For my website I have created an archive showcasing my favourite
@@ -107,8 +117,8 @@
 				</p>
 
 				<h1>Design</h1>
-				<div class="float-end me-4 d-flex flex-column justify-content-center">
-					<img src="../assets/favicon.svg" class="img-y figure-img" alt="megastructure archive favicon" />
+				<div class="float-end m-2 d-flex flex-column justify-content-center align-items-center">
+					<img src="../assets/favicon.svg" class="img-2 figure-img" alt="megastructure archive favicon" />
 					<figcaption class="figure-caption">Figure 1: The favicon used for the website.</figcaption>
 				</div>
 				<p>
@@ -164,9 +174,9 @@
 				<h1>Shared Functionality</h1>
 				<p>
 					To enable the use of modern three.js features, this website uses
-					<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">
-						JavaScript modules
-					</a>
+					<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules"
+						>JavaScript modules</a
+					>
 					and import maps as detailed on the
 					<a href="https://threejs.org/manual/#en/installation">three.js installation guide</a>. Additionally,
 					my development environment includes a basic <code>package.json</code> which can be used with the
@@ -183,16 +193,44 @@
 
 				<!-- prettier-ignore -->
 				<div data-shiki="javascript">
-				/**
-				* @typedef {Object} SceneOptions
-				* @property {{x: number, y: number, z: number, target: Vec3, speed: number}} camera - Camera configuration.
-				* @property {{file: string, height: number}} ambience - Sound confuguration for the scene
-				* @property {{x: number, y: number, z: number, size: number, shadows?: boolean}} sun - The position of the sun in the scene.
-				* @property {{file: string, rotation?: THREE.Euler, offset?: Vec3}} model - The path to the GLTF model to load and its tranformation.
-				* @property {string} skybox - The path to the skybox texture.
-				* @property {() => void} [animate] - A function that is called every frame, just before rendering.
-				*/
+/**
+* @typedef {Object} SceneOptions
+* @property {{x: number, y: number, z: number, target: Vec3, speed: number}} camera - Camera configuration.
+* @property {{file: string, height: number}} ambience - Sound confuguration for the scene
+* @property {{x: number, y: number, z: number, size: number, shadows?: boolean}} sun - The position of the sun in the scene.
+* @property {{file: string, rotation?: THREE.Euler, offset?: Vec3}} model - The path to the GLTF model to load and its tranformation.
+* @property {string} skybox - The path to the skybox texture.
+* @property {() => void} [animate] - A function that is called every frame, just before rendering.
+*/
 				</div>
+				<h2>Initialisation</h2>
+				<p>
+					The shared module provides most of the setup functionality used by all three megastructures. This
+					includes creating lights, loading skyboxes, setting up anti-aliasing and much more.
+				</p>
+				<h3>Model Compression</h3>
+				<p>
+					Many of the megastructures on this website include complex geometry and large textures. As a result,
+					some care has been taken to compress the models to improve load times. All textures are encoded as
+					WebP inside the GLTF files which dramatically reduces the size of some models. However the most
+					consequential compression method used is GLTF's meshopt compression extension. This had to be
+					enabled using the three.js MeshoptDecoder addon, and each model was preprocessed using the
+					<a href="https://meshoptimizer.org/gltf/">gltfpack</a> command line tool. This was able to reduce
+					the size of some models by up to 90% with no visible loss in quality.
+				</p>
+				<h3>Shadows</h3>
+				<p>
+					I have used three.js's shadow map system to create dynamic shadows in each scene. This effectively
+					attaches an orthographic camera to the sun which is used to calculate which objects are obscured
+					from the sun's perspective and which are not. This camera can be visualised by enabling the "Show
+					Shadow Camera" option in the control panel. This is useful for debugging as shadows are not casted
+					outside of the camera's view.
+				</p>
+				<p>
+					Using shadows requires them to be explicitly enabled on each mesh in the scene. When a model has
+					finished loading, I use the traverse function to enable every mesh as both a shadow caster and
+					receiver.
+				</p>
 				<h2>Interactivity</h2>
 				<p>
 					Every model has a selection of shared interactivity features. As a result, these features are
@@ -206,6 +244,14 @@
 					A control panel can be expanded by
 					<strong>clicking the button on the right side of the canvas</strong>.
 				</p>
+				<h3>Glitch Shader</h3>
+				<p>
+					The glitch shader is a post processing effect provided by three.js's addons that can be toggled on
+					and off from the control panel. This also triggers looping glitch sound effect by
+					<a href="https://pixabay.com/users/soundreality-31074404/">Jurij</a>
+					from
+					<a href="https://pixabay.com/sound-effects/">Pixabay</a>.
+				</p>
 				<h3>Ambience</h3>
 				<p>
 					The ambience system dynamically increases and decreases the volume of a looping sound effect based
@@ -215,13 +261,131 @@
 					impression that the sound is coming from the ground, which is appropriate for the sounds used on
 					this website. The equation used to calculate the volume is as follows:
 				</p>
-				<math xmlns="http://www.w3.org/1998/Math/MathML"
-					><mn>0.2</mn><mo>+</mo><mn>0.25</mn><mo>(</mo><mn>1</mn><mo>-</mo><mi>c</mi><mi>l</mi><mi>a</mi
-					><mi>m</mi><mi>p</mi><mo>(</mo
-					><mfrac
-						><mi>y</mi><mrow><mi>h</mi><mi>e</mi><mi>i</mi><mi>g</mi><mi>h</mi><mi>t</mi></mrow></mfrac
+				<math xmlns="http://www.w3.org/1998/Math/MathML" class="mx-4 my-3"
+					><mn>0.2</mn><mo>+</mo><mn>0.25</mn><mo>(</mo><mn>1</mn><mo>-</mo><mi>clamp</mi><mo>(</mo
+					><mfrac><mi>y</mi><mi mathvariant="italic">falloff</mi></mfrac
 					><mo>)</mo><mo>)</mo></math
 				>
+				<h3>Time of Day</h3>
+				<div class="float-end m-2 d-flex flex-column justify-content-center align-items-center">
+					<img
+						src="./assets/spherical-coordinates.svg"
+						class="img-2 figure-img rounded"
+						alt="spherical coordinates diagram"
+					/>
+					<figcaption class="figure-caption">
+						Figure 2: A diagram depicting the spherical coordinate system.
+						<sup><a href="https://en.wikipedia.org/wiki/File:3D_Spherical.svg">[2]</a></sup>
+					</figcaption>
+				</div>
+				<p>
+					The most complex interactivity feature is the time of day slider. This slider allows the user to
+					change both the position of the sun and the skybox texture. Because in three.js the direction of the
+					sun is determined by the direction of its position relative to the origin, some trigonometry is
+					required to translate the slider which represents the sun's angle into a position. This is known as
+					<a href="https://en.wikipedia.org/wiki/Spherical_coordinate_system"
+						>the spherical coordinate system</a
+					>
+					which is depicted in figure 2. The equations below are used to get the sun's spherical coordinates
+					from its initial
+					<a href="https://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian coordinates</a>, which
+					is the coordinate system used by three.js.
+				</p>
+				<div class="d-flex align-items-center flex-wrap">
+					<math xmlns="http://www.w3.org/1998/Math/MathML" class="mx-4 my-3"
+						><mi>r</mi><mo>=</mo
+						><msqrt
+							><mrow
+								><msup><mi>x</mi><mn>2</mn></msup
+								><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup
+								><mo>+</mo><msup><mi>z</mi><mn>2</mn></msup></mrow
+							></msqrt
+						></math
+					>
+					<math xmlns="http://www.w3.org/1998/Math/MathML" class="mx-4 my-3"
+						><mi>&#x3b8;</mi><mo>=</mo
+						><msup
+							><mi>sin</mi><mrow><mo>-</mo><mn>1</mn></mrow></msup
+						><mfenced
+							><mrow
+								><mo>(</mo><mfrac><mi>y</mi><mi>r</mi></mfrac
+								><mo>)</mo></mrow
+							></mfenced
+						></math
+					>
+					<math xmlns="http://www.w3.org/1998/Math/MathML" class="mx-4 my-3"
+						><mi>&#x3c6;</mi><mo>=</mo><mi>atan2</mi
+						><mrow
+							><mo>(</mo><mrow><mi>x</mi><mo>,</mo><mi>z</mi></mrow
+							><mo>)</mo></mrow
+						></math
+					>
+				</div>
+				<p>
+					Now that we have converted the sun's position into the spherical coordinate system, the time of day
+					can be changed by simply changing its polar angle (θ). We can then use the inverse of the equations
+					above to calculate the sun's new position in Cartesian coordinates.
+				</p>
+				<div class="d-flex align-items-center flex-wrap">
+					<math xmlns="http://www.w3.org/1998/Math/MathML" class="mx-4 my-3"
+						><mi>x</mi><mo>=</mo><mi>r</mi><mo>*</mo><mi>cos</mi><mo>(</mo><mi>&#x3b8;</mi><mo>)</mo
+						><mo>*</mo><mi>c</mi><mi>o</mi><mi>s</mi><mo>(</mo><mi>&#x3c6;</mi><mo>)</mo></math
+					>
+					<math xmlns="http://www.w3.org/1998/Math/MathML" class="mx-4 my-3"
+						><mi>y</mi><mo>=</mo><mi>r</mi><mo>*</mo><mi>s</mi><mi>i</mi><mi>n</mi><mo>(</mo><mi>&#x3b8;</mi
+						><mo>)</mo></math
+					>
+					<math xmlns="http://www.w3.org/1998/Math/MathML" class="mx-4 my-3"
+						><mi>z</mi><mo>=</mo><mi>r</mi><mo>*</mo><mi>cos</mi><mo>(</mo><mi>&#x3b8;</mi><mo>)</mo
+						><mo>*</mo><mi>s</mi><mi>i</mi><mi>n</mi><mo>(</mo><mi>&#x3c6;</mi><mo>)</mo></math
+					>
+				</div>
+				<p>
+					These equations handle the movement of the sun and the shadows in the scene, but to create a
+					convincing time of day effect, the intensity and colour of the sun and sky also need to change. For
+					the former, the intensity of the sun is reduced as it gets closer to the horizon. This is achieved
+					using the sine function which gives a smooth curve between the sun's angle and its intensity. The
+					full equation is as follows:
+				</p>
+				<math xmlns="http://www.w3.org/1998/Math/MathML" class="mx-4 my-3"
+					><mi>i</mi><mi>n</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>s</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>=</mo
+					><mn>4</mn><mo>*</mo><mi>sin</mi><mo>(</mo><mi mathvariant="italic">&#x3b8;</mi><mo>)</mo></math
+				>
+				<p>
+					To create the effect of a sunset, it is not sufficient to simply blend between two different skybox
+					textures. Instead, I wrote a custom
+					<a href="https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_on_the_web/GLSL_Shaders"
+						>GLSL Shader</a
+					>
+					to dynamically mix the blue parts of the skybox texture with a warm sunset gradient as the sun gets
+					closer to the horizon. Unfortunately, three.js does not allow shaders to be applied directly to the
+					skybox. The way I solved this was to create a new scene containing only an orthographic camera and a
+					plane. The skybox was then rendered onto the plane (which supports shaders) and the camera's view
+					was rendered to a <code>WebGLRenderTarget</code>. Once again, three.js causes difficulties here as
+					it caches the skybox texture after its been loaded. To remedy this, I am using a
+					<code>PMREMGenerator</code> to create a new skybox texture from the render target every time the
+					skybox is updated. All of this creates a very nice effect that would not be achievable by simply
+					blending skyboxes. The full fragment shader source code is shown below:
+				</p>
+				<!-- prettier-ignore -->
+				<div data-shiki="glsl">
+uniform sampler2D uTexture;
+uniform float uSunset;
+varying vec2 vUv;
+
+void main() {
+	vec4 base = texture2D(uTexture, vUv);
+
+	vec3 sunsetLow  = vec3(1.0,  0.38, 0.04);
+	vec3 sunsetMid  = vec3(0.95, 0.38, 0.28);
+	vec3 sunsetHigh = vec3(0.12, 0.04, 0.28);
+	vec3 sunset = mix(mix(sunsetLow, sunsetMid, vUv.y * 1.5), sunsetHigh, vUv.y);
+
+	float blueness = base.b / max(base.r, base.g) - 0.4;
+	vec3 result = mix(base.rgb, sunset, uSunset * blueness);
+	gl_FragColor = vec4(result, 1.0);
+}
+				</div>
 			</div>
 
 			<script src="./assets/about.js" type="module" />

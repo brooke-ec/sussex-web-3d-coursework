@@ -64,10 +64,14 @@ body {
 	}
 }
 
-.img-y {
+.img-2 {
 	max-height: 300px;
-	max-width: 50vw;
-	width: auto;
+	width: fit-content;
+}
+
+.img-1 {
+	max-height: 250px;
+	width: fit-content;
 }
 
 h1 {
@@ -89,5 +93,9 @@ sup a {
 	border-radius: 10px;
 	overflow: hidden;
 	white-space: pre;
+	margin-bottom: 1rem;
+}
+
+math {
 	margin-bottom: 1rem;
 }

@@ -1,6 +1,6 @@
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
-import { TAARenderPass } from "three/examples/jsm/postprocessing/TAARenderPass.js";
 import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
+import { TAARenderPass } from "three/examples/jsm/postprocessing/TAARenderPass.js";
 import { RGBShiftShader } from "three/examples/jsm/shaders/RGBShiftShader.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
@@ -94,7 +94,7 @@ void main() {
 		const pmrem = new THREE.PMREMGenerator(renderer);
 
 		renderSkybox = () => {
-			const uSunset = 1 - Math.min(dayratio * 2, 1);
+			const uSunset = 1 - Math.min(dayRatio * 2, 1);
 			if (uSunset != material.uniforms.uSunset.value) {
 				material.uniforms.uSunset.value = uSunset;
 				renderer.setRenderTarget(target);
@@ -125,9 +125,9 @@ void main() {
 	sun.castShadow = options.sun.shadows ?? true;
 	scene.add(sun);
 
-	const shadowhelper = new THREE.CameraHelper(sun.shadow.camera);
-	shadowhelper.visible = false;
-	scene.add(shadowhelper);
+	const shadowHelper = new THREE.CameraHelper(sun.shadow.camera);
+	shadowHelper.visible = false;
+	scene.add(shadowHelper);
 
 	// SETUP CAMERA
 	const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
@@ -153,6 +153,7 @@ void main() {
 		clips = gltf.animations;
 		gltf.scene.traverse(function (child) {
 			if (child instanceof THREE.Mesh) {
+				child.material.side = THREE.FrontSide;
 				child.receiveShadow = true;
 				child.castShadow = true;
 			}
@@ -235,7 +236,7 @@ void main() {
 	});
 
 	bindtoggle("helper-btn", false, "🎥 Hide Shadow Camera", "🎥 Show Shadow Camera", (value) => {
-		shadowhelper.visible = value;
+		shadowHelper.visible = value;
 	});
 
 	bindtoggle("glitch-btn", false, "👾 Disable Glitch", "👾 Enable Glitch", (value) => {
@@ -261,17 +262,21 @@ void main() {
 	});
 
 	const sunDistance = Math.sqrt(options.sun.x ** 2 + options.sun.y ** 2 + options.sun.z ** 2);
-	const initialAngle = Math.asin(options.sun.y / sunDistance);
+	const sunPolar = Math.asin(options.sun.y / sunDistance);
 	const sunAzimuth = Math.atan2(options.sun.z, options.sun.x);
-	let dayratio = Math.max(0, Math.sin(initialAngle));
+	let dayRatio = Math.max(0, options.sun.y / sunDistance);
 
-	bindrange("sun-range", initialAngle, 0, Math.PI, 0.01, (angle) => {
-		const h = sunDistance * Math.cos(angle);
-		sun.position.set(h * Math.cos(sunAzimuth), sunDistance * Math.sin(angle), h * Math.sin(sunAzimuth));
-		shadowhelper.update();
+	bindrange("sun-range", sunPolar, 0, Math.PI, 0.01, (angle) => {
+		const horizontal = sunDistance * Math.cos(angle);
+		sun.position.set(
+			horizontal * Math.cos(sunAzimuth),
+			sunDistance * Math.sin(angle),
+			horizontal * Math.sin(sunAzimuth),
+		);
 
-		dayratio = Math.max(0, Math.sin(angle));
-		sun.intensity = 4 * dayratio;
+		shadowHelper.update();
+		dayRatio = Math.max(0, Math.sin(angle));
+		sun.intensity = 4 * dayRatio;
 	});
 
 	// FUNCTIONALITY
@@ -362,10 +367,13 @@ export function bindrange(id, value, min, max, step, callback) {
 	const input = document.getElementById(id);
 	if (!(input instanceof HTMLInputElement)) return;
 
-	input.value = value.toString();
 	input.min = min.toString();
 	input.max = max.toString();
 	input.step = step.toString();
+
+	// @ts-ignore
+	input.value = value;
+
 	input.addEventListener("input", () => {
 		value = parseFloat(input.value);
 		callback(value);
