@@ -8,6 +8,14 @@
 
 		<link rel="stylesheet" href="/assets/main.css" />
 
+		<meta content="#44424f" data-react-helmet="true" name="theme-color" />
+		<meta content="Megastructure Archive" property="og:title" />
+		<meta content="/assets/favicon.webp" property="og:image" />
+		<meta
+			content="Megastructure Archive is a website that archives all my favourite megastructures from fiction!"
+			property="og:description"
+		/>
+
 		<!-- LIBRARIES -->
 		<link
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
@@ -101,8 +109,9 @@
 			<div class="border border-top-0 p-3 clearfix">
 				<h1>Statement of Originality</h1>
 				<p>
-					This website is submitted as part requirement for the degree of Computer Science at the University
-					of Sussex. It is the product of my own labour except where indicated in the text. Please see the
+					This website is submitted as part of the requirement for my degree of Computer Science at the
+					University of Sussex. It is the product of my own labour except where indicated in the text. Please
+					see the
 					<a href="./sources/">sources page</a> for a full list of sources used in the creation of this
 					website.
 				</p>
@@ -111,9 +120,9 @@
 					For my website I have created an archive showcasing my favourite
 					<a href="https://en.wikipedia.org/wiki/Megastructure">megastructures</a>
 					from fiction. I have created three models of these megastructures using the 3D modelling software
-					<a href="https://www.blender.org/">Blender</a>. You can explore the modelling process and
-					interactivity development for each model using the tabs above. This tab will explore the general
-					design and implementation decisions shared by all three models.
+					<a href="https://www.blender.org/">Blender</a>. This tab will explore the general design and
+					implementation decisions shared by all three models. You can explore the modelling process and
+					interactivity development for each model using the tabs above.
 				</p>
 
 				<h1>Design</h1>
@@ -132,16 +141,16 @@
 					of all pages.
 				</p>
 				<p>
-					The website uses Bootstrap's inbuilt color scheme for its good contrast and readability. Bootstrap's
-					dark theme was chosen as it fits the theme of the website and was enabled by adding the attribute
+					The website uses Bootstrap's inbuilt colour scheme for its good contrast and readability.
+					Bootstrap's dark theme was chosen as it fits the theme of the website and was enabled by adding the
+					attribute
 					<code>data-bs-theme="dark"</code> to the root HTML element.
 				</p>
 				<p>
-					The favicon for the website is a scalable vector graphic of
-					<a href="../citadel/">the Citadel</a> designed by me using
-					<a href="https://www.figma.com/">Figma</a>. This involved using a reference image of the Citadel to
-					guide the placement and shape of various polygons and bezier curves to create a simplified but
-					recognisable depiction of the Citadel.
+					I designed the Favicon for the website which is a scalable vector graphic of
+					<a href="../citadel/">the Citadel</a> using <a href="https://www.figma.com/">Figma</a>. This
+					involved using a reference image of the Citadel to guide the placement and shape of various polygons
+					and bezier curves to create a simplified but recognisable depiction of the Citadel.
 				</p>
 				<p>
 					These about pages use the <a href="https://shiki.style/">Shiki</a> code renderer for the code
@@ -151,11 +160,11 @@
 				<p>
 					The website's <a href="../">home page</a> uses three
 					<a href="https://getbootstrap.com/docs/5.3/components/card/">Bootstrap cards</a> to display a
-					preview of each megastructure model along with a blurb. These are contained in a fluid grid layout,
-					allowing them to wrap when the screen is too small. The images for these cards are renders of each
-					model using Blender's cycles rendering engine. These renders often include additional elements not
-					found in the 3D view such as volumetric fog and procedural environments. For more information, see
-					the other tabs on this page.
+					preview of each megastructure model along with a brief description. These are contained in a fluid
+					grid layout, allowing them to wrap when the screen is too small. The images for these cards are
+					renders of each model using Blender's cycles rendering engine. These renders often include
+					additional elements not found in the 3D view such as volumetric fog and procedural environments. For
+					more information on the renders for each megastructure, please see their respective tabs above.
 				</p>
 				<p>
 					The home page features a full-width hero image with a custom parallax script taken from one of my
@@ -206,7 +215,7 @@
 				<h2>Initialisation</h2>
 				<p>
 					The shared module provides most of the setup functionality used by all three megastructures. This
-					includes creating lights, loading skyboxes, setting up anti-aliasing and much more.
+					includes creating lights, loading skyboxes, setting up anti-aliasing and post processing effects.
 				</p>
 				<h3>Model Compression</h3>
 				<p>
@@ -223,26 +232,25 @@
 					I have used three.js's shadow map system to create dynamic shadows in each scene. This effectively
 					attaches an orthographic camera to the sun which is used to calculate which objects are obscured
 					from the sun's perspective and which are not. This camera can be visualised by enabling the "Show
-					Shadow Camera" option in the control panel. This is useful for debugging as shadows are not casted
+					Shadow Camera" option in the control panel. This is useful for debugging as shadows are not cast
 					outside of the camera's view.
 				</p>
 				<p>
-					Using shadows requires them to be explicitly enabled on each mesh in the scene. When a model has
-					finished loading, I use the traverse function to enable every mesh as both a shadow caster and
-					receiver.
+					To use shadows three.js requires them to be explicitly enabled on each mesh in the scene. When a
+					model has finished loading, I use the traverse function to enable every mesh as both a shadow caster
+					and receiver.
 				</p>
 				<h2>Interactivity</h2>
 				<p>
 					Every model has a selection of shared interactivity features. As a result, these features are
-					implemented in the shared JavaScript module. These include basic features we were taught in lab such
-					as toggling wireframe mode or orbit controls as well as more complex features such as enabling a
-					glitch shader.
+					implemented in the shared JavaScript module. These include basic features that we were taught in lab
+					such as toggling wireframe mode or orbit controls as well as more complex features such as enabling
+					a glitch shader.
 				</p>
 				<p>
-					Many interactivity features are hidden by default using
+					Many interactivity features are contained within a control panel that can be hidden using the arrow
+					button. This was achieved using
 					<a href="https://getbootstrap.com/docs/5.3/components/collapse/">Bootstrap's collapse component</a>.
-					A control panel can be expanded by
-					<strong>clicking the button on the right side of the canvas</strong>.
 				</p>
 				<h3>Glitch Shader</h3>
 				<p>
@@ -257,9 +265,9 @@
 					The ambience system dynamically increases and decreases the volume of a looping sound effect based
 					on the camera's current height. This is distinct from three.js's
 					<a href="https://threejs.org/docs/#PositionalAudio">positional audio system</a> where volume is
-					based on the camera's distance from a single point, instead of it's height. This gives the
-					impression that the sound is coming from the ground, which is appropriate for the sounds used on
-					this website. The equation used to calculate the volume is as follows:
+					based on the camera's distance from a single point, instead of its height. This gives the impression
+					that the sound is coming from the ground, which is appropriate for the sounds used on this website.
+					The equation used to calculate the volume is as follows:
 				</p>
 				<math xmlns="http://www.w3.org/1998/Math/MathML" class="mx-4 my-3"
 					><mn>0.2</mn><mo>+</mo><mn>0.25</mn><mo>(</mo><mn>1</mn><mo>-</mo><mi>clamp</mi><mo>(</mo
@@ -280,14 +288,15 @@
 				</div>
 				<p>
 					The most complex interactivity feature is the time of day slider. This slider allows the user to
-					change both the position of the sun and the skybox texture. Because in three.js the direction of the
-					sun is determined by the direction of its position relative to the origin, some trigonometry is
-					required to translate the slider which represents the sun's angle into a position. This is known as
+					change both the position of the sun and the skybox texture. In three.js, the direction of the sun is
+					determined by the direction of its position relative to the origin. As a result, some trigonometry
+					is required to translate the slider which represents the sun's angle into a position. This is known
+					as
 					<a href="https://en.wikipedia.org/wiki/Spherical_coordinate_system"
 						>the spherical coordinate system</a
 					>
-					which is depicted in figure 2. The equations below are used to get the sun's spherical coordinates
-					from its initial
+					which is depicted in figure 2. The equations below are used to calculate the sun's spherical
+					coordinates from its initial
 					<a href="https://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian coordinates</a>, which
 					is the coordinate system used by three.js.
 				</p>
@@ -322,9 +331,9 @@
 					>
 				</div>
 				<p>
-					Now that we have converted the sun's position into the spherical coordinate system, the time of day
-					can be changed by simply changing its polar angle (θ). We can then use the inverse of the equations
-					above to calculate the sun's new position in Cartesian coordinates.
+					Having converted the sun's position into the spherical coordinate system, the time of day can be
+					changed by simply changing its polar angle (θ). The inverse of the above equations can then be used
+					to calculate the sun's new position in Cartesian coordinates.
 				</p>
 				<div class="d-flex align-items-center flex-wrap">
 					<math xmlns="http://www.w3.org/1998/Math/MathML" class="mx-4 my-3"
