@@ -115,6 +115,15 @@
 					<a href="./sources/">sources page</a> for a full list of sources used in the creation of this
 					website.
 				</p>
+				<h2>Generative AI Usage Record</h2>
+				<p>
+					Generative AI has not been used in the development of this website other than occasionally accepting
+					Visual Studio Code's
+					<a href="https://code.visualstudio.com/docs/copilot/ai-powered-suggestions#_ghost-text-suggestions"
+						>Copilot "ghost text" suggestions</a
+					>. However, these suggestions were only accepted if they were completing what I was already
+					intending to write and were not used to generate large portions of code.
+				</p>
 				<h1>About</h1>
 				<p>
 					For my website I have created an archive showcasing my favourite
@@ -274,6 +283,16 @@
 					><mfrac><mi>y</mi><mi mathvariant="italic">falloff</mi></mfrac
 					><mo>)</mo><mo>)</mo></math
 				>
+				<p>
+					The improve the performance of loading sound effects onto the web application, I encoded every sound
+					as a <a href="https://en.wikipedia.org/wiki/Ogg">Ogg Vorbis</a> file which I found had a better
+					compression ratio than mp3. Another difficult I faced was due to browser autoplay policies, ambience
+					sounds can only be played after the user has interacted with the page. To handle this situation, I
+					detect if the the audio listener failed to start and display a button over canvas prompting the user
+					to click to enable sound. This usually only occurs if the user refreshed the page or entered the URL
+					manually, as clicking a link to the page from another page counts as an interaction that enables
+					sound.
+				</p>
 				<h3>Time of Day</h3>
 				<div class="float-end m-2 d-flex flex-column justify-content-center align-items-center">
 					<img
