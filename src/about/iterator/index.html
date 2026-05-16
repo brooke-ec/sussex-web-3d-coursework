@@ -97,7 +97,7 @@
 					<a class="nav-link" href="../citadel/">Citadel</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link active" aria-current="page"">Iterator</a>
+					<a class="nav-link active" aria-current="page">Iterator</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="../tower/">The Tower</a>
@@ -107,8 +107,312 @@
 				</li>
 			</ul>
 			<div class="border border-top-0 p-3">
-				<h1>About</h1>
+				<h1>Summary</h1>
+				<p>
+					The second megastructure I added was an Iterator Superstructure from
+					<a href="https://videocultmedia.com/">Videocult</a>'s
+					<a href="https://store.steampowered.com/app/312520/Rain_World/">Rain World</a>. An Iterator
+					Superstructure or is a gigantic metal structure that towers above the clouds, supported by eight
+					legs. A prominent feature of an Iterator is is the
+					<a href="https://en.wikipedia.org/wiki/Greeble#cite_note-6">greebles</a> that cover its surface.
+					This presents an interesting challenge for modelling, as heavy greebling can easily lead to a very
+					high polygon count. In figure 1 you can see a high quality render of the final model, which was used
+					on the home page of the website for both the card and hero video. For this render I did not worry
+					much about the polygon count and I added volumetric clouds around the base of the structure to give
+					a better sense of scale.
+				</p>
+				<div class="d-flex flex-column align-items-center">
+					<img
+						src="./assets/render.webp"
+						class="img-half figure-img rounded"
+						alt="render of my citadel model"
+					/>
+					<figcaption class="figure-caption">
+						Figure 1: The high quality render of my Iterator model used on the home page.
+					</figcaption>
+				</div>
+				<h1>Modelling</h1>
+				<p>
+					To create this model I used the 3D modelling software
+					<a href="https://www.blender.org/">Blender</a>. As Rain World is a 2D game, I had only a single
+					image of the superstructure to use as reference which can be seen on the
+					<a href="../../iterator/">Iterator page</a>. The Iterator is fundamentally a very simple structure,
+					with a cuboid supported by eight legs. The complexity comes from the greebles that cover the surface
+					of the structure. Aside from greebling, the model only requires the legs and the city on top to be
+					modelled. The city was modelled using the "add cube" tool and subdividing the top faces to create a
+					more interesting silhouette. The legs were modelled with heavy use of the mirror and array
+					modifiers, which excel for repetitive tasks such as this.
+				</p>
+				<h2>Greebling</h2>
+				<p>
+					The greelbing on the Iterator Superstructure is separated into two categories. Large, purposefully
+					placed greebles and small randomly placed greebles. Both are modelled using the same process, many
+					of which makes heavy use of the "spin" tool to create interweaving pipes and cables. The large
+					greebles were purposefully placed on the model to make it look more functional, instead of the
+					visual noise added by the small greebles. The model without any of the small greebles can be seen in
+					figure 2. The small greebles were added using Blender's "Scatter on Surface" modifier which randomly
+					distributes objects across the surface of a model. I created a collection of eight different greeble
+					models to use with this modifier, which can be seen below. I took care to ensure these models were
+					very low poly to avoid the polygon count of the model ballooning out of control. However, even with
+					this the finished model have over 100,000 polygons which is very high for a model to be used in a
+					web application.
+				</p>
+				<div class="d-flex justify-content-center align-items-center gap-4 my-4 flex-wrap">
+					<div class="d-flex flex-column align-items-center">
+						<video
+							loop
+							autoplay
+							class="img-2 figure-img rounded"
+							alt="video of my iterator model without greebles"
+						>
+							<source src="./assets/no-greebles.webm" type="video/webm" />
+							Your browser does not support the video tag.
+						</video>
+						<figcaption class="figure-caption">
+							Figure 2: My Iterator model without small greebles.
+						</figcaption>
+					</div>
+					<div class="d-flex flex-column align-items-center">
+						<div
+							data-bs-theme="light"
+							id="modelling-carousel"
+							data-bs-ride="carousel"
+							class="carousel slide d-flex flex-column align-items-center figure-img"
+						>
+							<div class="carousel-indicators">
+								<button
+									type="button"
+									data-bs-target="#modelling-carousel"
+									data-bs-slide-to="0"
+									class="active"
+									aria-current="true"
+									aria-label="Slide 1"
+								></button>
+								<button
+									type="button"
+									data-bs-target="#modelling-carousel"
+									data-bs-slide-to="1"
+									aria-label="Slide 2"
+								></button>
+								<button
+									type="button"
+									data-bs-target="#modelling-carousel"
+									data-bs-slide-to="2"
+									aria-label="Slide 3"
+								></button>
+								<button
+									type="button"
+									data-bs-target="#modelling-carousel"
+									data-bs-slide-to="3"
+									aria-label="Slide 4"
+								></button>
+								<button
+									type="button"
+									data-bs-target="#modelling-carousel"
+									data-bs-slide-to="4"
+									aria-label="Slide 5"
+								></button>
+								<button
+									type="button"
+									data-bs-target="#modelling-carousel"
+									data-bs-slide-to="5"
+									aria-label="Slide 6"
+								></button>
+								<button
+									type="button"
+									data-bs-target="#modelling-carousel"
+									data-bs-slide-to="6"
+									aria-label="Slide 7"
+								></button>
+								<button
+									type="button"
+									data-bs-target="#modelling-carousel"
+									data-bs-slide-to="7"
+									aria-label="Slide 8"
+								></button>
+							</div>
+							<div class="carousel-inner rounded" style="width: 300px; height: 300px">
+								<div class="carousel-item active">
+									<img
+										src="./assets/greeble-dense.webp"
+										class="d-block w-100 img-2"
+										alt="a screenshot of blender showing the citadel in edit mode"
+									/>
+								</div>
+								<div class="carousel-item">
+									<img
+										src="./assets/greeble-fans.webp"
+										class="d-block w-100 img-2"
+										alt="a screenshot of blender showing the citadel in edit mode"
+									/>
+								</div>
+								<div class="carousel-item">
+									<img
+										src="./assets/greeble-girder.webp"
+										class="d-block w-100 img-2"
+										alt="a screenshot of blender showing the citadel in edit mode"
+									/>
+								</div>
+								<div class="carousel-item">
+									<img
+										src="./assets/greeble-pattern.webp"
+										class="d-block w-100 img-2"
+										alt="a screenshot of blender showing the citadel in edit mode"
+									/>
+								</div>
+								<div class="carousel-item">
+									<img
+										src="./assets/greeble-pipes.webp"
+										class="d-block w-100 img-2"
+										alt="a screenshot of blender showing the citadel in edit mode"
+									/>
+								</div>
+								<div class="carousel-item">
+									<img
+										src="./assets/greeble-tanks.webp"
+										class="d-block w-100 img-2"
+										alt="a screenshot of blender showing the citadel in edit mode"
+									/>
+								</div>
+								<div class="carousel-item">
+									<img
+										src="./assets/greeble-towers.webp"
+										class="d-block w-100 img-2"
+										alt="a screenshot of blender showing the citadel in edit mode"
+									/>
+								</div>
+								<div class="carousel-item">
+									<img
+										src="./assets/greeble-vent.webp"
+										class="d-block w-100 img-2"
+										alt="a screenshot of blender showing the citadel in edit mode"
+									/>
+								</div>
+							</div>
+							<button
+								class="carousel-control-prev"
+								type="button"
+								data-bs-target="#modelling-carousel"
+								data-bs-slide="prev"
+							>
+								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">Previous</span>
+							</button>
+							<button
+								class="carousel-control-next"
+								type="button"
+								data-bs-target="#modelling-carousel"
+								data-bs-slide="next"
+							>
+								<span class="carousel-control-next-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">Next</span>
+							</button>
+						</div>
+						<figcaption class="figure-caption">
+							Figure 3: The eight different small greeble models.
+						</figcaption>
+					</div>
+				</div>
+				<h2>Texturing</h2>
+				<p>
+					As this was my second model, I wanted to experiment with Blender's powerful
+					<a href="https://docs.blender.org/manual/en/latest/render/shader_nodes/index.html">Shader Node</a>
+					system. This was mostly because the Iterator's surface is mostly metal, which can be difficult to
+					texture with traditional image textures. Instead I created a procedural shader that uses noise
+					textures to create rust and dirt effects on the surface of the model, seen in figure 4. I also used
+					Shader Node to create the texture for the city on top of the superstructure. This uses the "Brick
+					Texture" node to create a repeating pattern of rectangles that look like windows. This shader is
+					significantly more complicated as it has to map the brick texture, which is usually only on the top
+					of a surface, to all sides of the buildings in the city. Unfortunately, three.js does not support
+					procedural shaders created in Blender and so I had to use Blender to "bake" the shader into a
+					regular image texture which could then be used in three.js. This baking process uses a
+					<code>4096x4096</code> image which was made the model very large. This is what led me to set up the
+					GLTF compression settings talked about on the <a href="..">general tab</a>.
+				</p>
+				<div class="d-flex flex-column align-items-center">
+					<img
+						src="./assets/superstructure-shader.webp"
+						class="img-half figure-img rounded"
+						alt="render of my citadel model"
+					/>
+					<figcaption class="figure-caption">
+						Figure 4: The shader I created for the Iterator's superstructure. Featuring procedural rust and
+						dirt effects.
+					</figcaption>
+				</div>
+				<h1>Features</h1>
+				<p>
+					The Iterator Superstructure page has by far the greatest number of unique features of any
+					megastructure on the website, which this section will explore. For more information on the shared
+					features of all three megastructures, see the <a href="../">general tab</a>.
+				</p>
+				<h2>Clouds</h2>
+				<div class="float-end m-2 d-flex flex-column justify-content-center align-items-center">
+					<img
+						src="./assets/clouds.webp"
+						class="img-2 rounded figure-img"
+						style="image-rendering: pixelated"
+						alt="an image showing the cloud texture"
+					/>
+					<figcaption class="figure-caption">Figure 5: The sixth layer procedural cloud texture.</figcaption>
+				</div>
+				<p>
+					The first and most obvious unique feature are the clouds that surround the base of the
+					superstructure. Three.js does not support the volumetric clouds I used in Blender, and so I had to
+					get creative to achieve a similar effect. After some experimentation I settled on stacking six
+					layers of semi-transparent planes with procedural cloud textures. The texture for each layer is
+					generated when the page is loaded using three.js's <code>ImprovedNoise</code> for creating
+					<a href="https://en.wikipedia.org/wiki/Perlin_noise">Perlin Noise</a>. Each layer of clouds has a
+					progressively lower threshold, giving the effect that the clouds become denser lower down. The
+					effect is further improved by slowly scrolling the textures of each layer, which are large enough to
+					not have too obvious a seam. The cloud texture can be seen in figure 5.
+				</p>
+				<h2>Lightning</h2>
+				<p>
+					In Rainworld occasional flashes of green lightning can be seen underneath Iterator Superstructures.
+					This is one of the distinctive features that makes Iterators recognisable, and so I decided to
+					implement it on this website. To achieve this, I used the
+					<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout">set timeout</a>
+					function to randomly schedule the effect. When the effect is triggered, I move move a
+					<code>PointLight</code> instance to a random location underneath the superstructure and flash it
+					twice using three more calls to <code>setTimeout</code>. I also play a random thunder sound from the
+					same location using three.js's <code>PositionalAudio</code> class. This creates a nice audiovisual
+					effect that adds to the atmosphere of the page.
+				</p>
+				<h2>Venting Particles</h2>
+				<p>
+					The primary interactivity feature of the Iterator page is the ability to vent its coolant from the
+					control panel. In Rain World, Iterators consume and vent vast quantities of water on periodic
+					cycles. This is what causes the titular rain in the game. To simulate this effect, I used the
+					<a href="https://three-nebula.org/">nebula library</a> which provides a powerful particle system for
+					three.js. I set up and positioned five particle emitters inside all of the large vent greebles on
+					the model. When the user activates the venting from the control panel, the emission rate is
+					increased to 10 particles per second and the particles begin to spawn. The texture for the particles
+					is taken from the <a href="https://kenney.nl/assets/particle-pack">Kenney</a> free asset library.
+				</p>
+				<p>The nebula emitter configuration is given in the code snippet below.</p>
+
+				<!-- prettier-ignore -->
+				<div data-shiki="javascript">
+new nebula.Emitter()
+	.setRate(new nebula.Rate(0))
+	.addInitializers([
+		new nebula.RadialVelocity(new nebula.Span(1, 5), new nebula.Vector3D(shape.vx, 1, shape.vz), 10),
+		new nebula.Position(new nebula.BoxZone(3 * shape.vz, 0.5, 3 * shape.vx)),
+		new nebula.Body(particleSprite),
+		new nebula.Life(3, 10),
+	])
+	.addBehaviours([
+		new nebula.Alpha(1, 0),
+		new nebula.Scale(0.3, 0.4),
+		new nebula.Color(new THREE.Color(0xffffff), new THREE.Color(0xffffff)),
+	])
+	.setPosition(shape)
+	.emit()
+				</div>
 			</div>
+
+			<script src="../assets/about.js" type="module"></script>
 		</main>
 
 		<!-- FOOTER -->

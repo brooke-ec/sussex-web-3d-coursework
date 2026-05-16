@@ -18,18 +18,6 @@ const { scene, timer, listener } = setup(container, {
 	},
 });
 
-const createSprite = () => {
-	let map = new THREE.TextureLoader().load(`./assets/smoke1.png`);
-	let material = new THREE.SpriteMaterial({
-		map: map,
-		color: 0xff0000,
-		blending: THREE.AdditiveBlending,
-		fog: true,
-	});
-
-	return new THREE.Sprite(material);
-};
-
 scene.fog = new THREE.FogExp2(0xefd1b5, 0.005);
 const { animate: animateClouds } = createClouds(scene);
 
@@ -80,6 +68,18 @@ const loader = new THREE.AudioLoader();
 	play();
 })();
 
+const particleSprite = (() => {
+	let map = new THREE.TextureLoader().load(`./assets/smoke1.png`);
+	let material = new THREE.SpriteMaterial({
+		map: map,
+		color: 0xff0000,
+		blending: THREE.AdditiveBlending,
+		fog: true,
+	});
+
+	return new THREE.Sprite(material);
+})();
+
 const particles = new ParticleSystem();
 
 const emitters = [
@@ -95,7 +95,7 @@ const emitters = [
 			// @ts-ignore
 			new nebula.RadialVelocity(new nebula.Span(1, 5), new nebula.Vector3D(shape.vx, 1, shape.vz), 10),
 			new nebula.Position(new nebula.BoxZone(3 * shape.vz, 0.5, 3 * shape.vx)),
-			new nebula.Body(createSprite()),
+			new nebula.Body(particleSprite),
 			new nebula.Life(3, 10),
 		])
 		.addBehaviours([

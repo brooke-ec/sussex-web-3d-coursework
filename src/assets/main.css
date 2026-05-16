@@ -66,17 +66,17 @@ body {
 
 .img-half {
 	max-width: 50%;
-	width: fit-content;
+	width: auto;
 }
 
 .img-2 {
 	max-height: 300px;
-	width: fit-content;
+	width: auto;
 }
 
 .img-1 {
 	max-height: 250px;
-	width: fit-content;
+	width: auto;
 }
 
 h1 {
