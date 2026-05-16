@@ -107,7 +107,146 @@
 				</li>
 			</ul>
 			<div class="border border-top-0 p-3">
-				<h1>About</h1>
+				<h1>Summary</h1>
+				<p>
+					The final megastructure I modelled The Tower from
+					<a href="https://www.square-enix-games.com/">Square Enix</a>'s
+					<a href="https://store.steampowered.com/app/524220/NieRAutomata/">NieR: Automata</a>. The Tower was
+					the model I was most worried about creating, as unlike the other two megastructures it features
+					hundreds of graceful, organic curves. A stark difference from the the mostly geometric shapes of the
+					Citadel and Iterator. However, I was able to overcome these challenges and now I consider the Tower
+					to be my favourite model of the three. You can see the high quality render of the model in figure 1
+					below, which is used on the home page. For this render I used some tree assets by
+					<a href="https://sketchfab.com/FlowOff">Vova Truestory</a> on Sketchfab.
+				</p>
+				<div class="d-flex flex-column align-items-center">
+					<img
+						src="./assets/render.webp"
+						class="img-half figure-img rounded"
+						alt="render of my citadel model"
+					/>
+					<figcaption class="figure-caption">
+						Figure 1: The high quality render of my Tower model used on the home page.
+					</figcaption>
+				</div>
+				<h1>Modelling</h1>
+				<p>
+					To create this model I used the 3D modelling software
+					<a href="https://www.blender.org/">Blender</a>. For reference I used some
+					<a href="https://x.com/ThreeEyedGemini/status/1675221677335105537"
+						>screenshots of the ingame model</a
+					>
+					extracted by Twitter user @ThreeEyedGemini. As the third model that I made, I felt confident to use
+					many modifiers to achieve the Tower's look. I started by making the central tower, which I made by
+					applying Blender's "Screw" modifier to a hexagon profile. This created the twisted look that the
+					tower is known for. I progressively scaled edge loops of this central tower to increase its width in
+					the center. I then created the three large pillars by subdiving the the top faces and selectively
+					extruding it to give that iconic voxelised look. The pillars were then duplicated using Blender's
+					"Array" modifier to create the other two pillars.
+				</p>
+				<p>
+					The final, and most important step was to add the long curves connecting the pillars to the central
+					tower. To achieve this, I used Blender's
+					<a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve">Bézier curve</a> feature to create the
+					shape I wanted, and the "Curve to Tube" modifier to give the curves a 3D shape. This was very
+					successful in achieving the look I wanted, and was a lot easier than trying to achieve the same
+					result with basic extrusion techniques. Once the curves were in place, I merged them with the pillar
+					geometry using the "Geometry Input" modifier. This resulted in the curves being duplicated by the
+					array modifier, which effectively tripled the amount of curves I had, decreasing the amount of work
+					I had to do. You can see the model without the array modifier in figure 2 below.
+				</p>
+				<div class="d-flex flex-column align-items-center">
+					<img
+						src="./assets/no-array.webp"
+						class="img-2 figure-img rounded"
+						alt="render of my citadel model"
+					/>
+					<figcaption class="figure-caption">
+						Figure 2: My Tower model without the array modifier, showing the curves before they are
+						duplicated.
+					</figcaption>
+				</div>
+				<h2>Texturing</h2>
+				<p>
+					The Tower itself is a pure white colour, so I did not have to worry about texturing the main
+					structure. However, I wanted to add the surrounding city to give the model's scale more context. To
+					achieve I created a collection of skyscrapers using basic extrusion and subdivision tools. However,
+					these new buildings needed textures. To fulfil this requirement, I used Blender's powerful
+					<a href="https://docs.blender.org/manual/en/latest/render/shader_nodes/index.html">Shader Node</a>
+					system to create procedural textures for the city, seen in figure 3. This used the "Brick Texture"
+					node to create windows, which by default only maps itself onto the top surface of an object. As a
+					result some extra nodes were needed to make every side appear as if it were the top. The events of
+					NieR: Automata take place in the distant future after humanity has been driven to extinction, as a
+					result there are large vines growing over the city. To achieve this, I used the "<a
+						href="https://en.wikipedia.org/wiki/Voronoi_diagram"
+						>Voronoi</a
+					>
+					Texture" node to create interconnecting lines which I used as a mask to overlay a green colour.
+				</p>
+				<p>
+					Unfortunately, three.js does not support procedural shaders created in Blender and so I had to use
+					Blender to "bake" the shader into a regular image texture which could then be used in three.js. This
+					baking process uses a <code>4096x4096</code> image which was made the model very large. This is what
+					led me to set up the GLTF compression settings talked about on the <a href="..">general tab</a>.
+				</p>
+				<div class="d-flex flex-column align-items-center">
+					<img
+						src="./assets/shader.webp"
+						class="img-half figure-img rounded"
+						alt="a screenshot of the shader nodes used to create the building texture for the city"
+					/>
+					<figcaption class="figure-caption">
+						Figure 3: The shader nodes to create the building texture used on the surrounding city.
+					</figcaption>
+				</div>
+				<h1>Interactivity</h1>
+				<div class="float-end m-2 d-flex flex-column justify-content-center align-items-center">
+					<img
+						src="./assets/non-manifold.webp"
+						class="img-2 rounded figure-img"
+						style="image-rendering: pixelated"
+						alt="an"
+					/>
+					<figcaption class="figure-caption">
+						Figure 4: A look ath the interior faces inside the model. Every face should be red.
+					</figcaption>
+				</div>
+				<p>
+					Deciding what interactivity to add to The Tower was no easy task. Unlike with the other
+					megastructures, there was no obvious choice and so I decided to do a rigidbody simulation of the
+					Tower collapsing. This is something that happens at the very end of the game, and so it felt fitting
+					to add.
+				</p>
+				<p>
+					While preparing for the physics simulation, I encountered many challenges while. Due to my
+					inexperience with modelling in Blender, I had created a lot of
+					<a href="https://en.wikipedia.org/wiki/Manifold">non-manifold</a> geometry. This is was caused by my
+					extrusion for creating the pillars earlier, which had left interior faces at every extrusion, seen
+					in figure 4. This was a problem as the process needed all objects to be manifold and so I had to fix
+					my mesh. I first tried to manually fix the mesh by deleting the interior faces, but there were so
+					many and they were all interconnected making this unviable. However, I was able to use Blender's
+					"Remesh" modifier to repair the mesh. The modifier works by recreating the geometry of the model
+					using voxels, which was fine as that is the aesthetic I was going for anyway.
+				</p>
+				<p>
+					In order to make the Tower collapse into lots of small pieces, I used Blender's
+					<a href="https://extensions.blender.org/add-ons/cell-fracture/">Cell Fracture</a> add-on. Which
+					provides a powerful way to break up manifold geometry into smaller pieces. The last step was to set
+					up the rigidbody simulation, which was a simple process thanks to Blender's powerful physics engine.
+					I baked the final into normal keyframes which allowed me to export the animation as part of the GLTF
+					file and play it back in three.js along with a sound effect by
+					<a
+						href="https://pixabay.com/sound-effects/nature-052256-cracking-earthquake-cracking-soil-cracking-stone-86770/"
+						>Freesound Community</a
+					>.
+				</p>
+				<p>
+					Unfortunately the process of fracturing the model into hundreds of pieces and then baking the
+					physics simulation made the GLTF file slightly laggy in the browser. While the polygon count of the
+					model only increased by around 1,500 faces, the number of draw calls increased dramatically as each
+					piece of the fractured model is a separate mesh. As a result I had to disable shadows on this page
+					to keep the framerate at an acceptable level.
+				</p>
 			</div>
 		</main>
 

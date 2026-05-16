@@ -323,11 +323,13 @@
 					Shader Node to create the texture for the city on top of the superstructure. This uses the "Brick
 					Texture" node to create a repeating pattern of rectangles that look like windows. This shader is
 					significantly more complicated as it has to map the brick texture, which is usually only on the top
-					of a surface, to all sides of the buildings in the city. Unfortunately, three.js does not support
-					procedural shaders created in Blender and so I had to use Blender to "bake" the shader into a
-					regular image texture which could then be used in three.js. This baking process uses a
-					<code>4096x4096</code> image which was made the model very large. This is what led me to set up the
-					GLTF compression settings talked about on the <a href="..">general tab</a>.
+					of a surface, to all sides of the buildings in the city.
+				</p>
+				<p>
+					Unfortunately, three.js does not support procedural shaders created in Blender and so I had to use
+					Blender to "bake" the shader into a regular image texture which could then be used in three.js. This
+					baking process uses a <code>4096x4096</code> image which was made the model very large. This is what
+					led me to set up the GLTF compression settings talked about on the <a href="..">general tab</a>.
 				</p>
 				<div class="d-flex flex-column align-items-center">
 					<img
