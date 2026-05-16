@@ -64,6 +64,11 @@ body {
 	}
 }
 
+.img-half {
+	max-width: 50%;
+	width: fit-content;
+}
+
 .img-2 {
 	max-height: 300px;
 	width: fit-content;
