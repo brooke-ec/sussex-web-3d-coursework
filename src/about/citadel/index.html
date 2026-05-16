@@ -128,104 +128,17 @@
 					</figcaption>
 				</div>
 				<h1>Modelling</h1>
-				<div class="float-end m-2 d-flex flex-column justify-content-center align-items-center">
-					<img
-						src="./assets/ingame.webp"
-						class="img-2 figure-img rounded"
-						alt="the citadel as seen from the skybox in-game"
-					/>
-					<figcaption class="figure-caption">
-						Figure 2: The Citadel as seen from the skybox in-game.
-					</figcaption>
-				</div>
 				<p>
 					To create this model I used the 3D modelling software
 					<a href="https://www.blender.org/">Blender</a>. As it was the first model I made for this project,
 					it uses less advanced techniques than the other two, being created mostly with basic extrusion and
-					subdivision tools. As a result of this very purposeful and meticulous modelling process, the final
-					model has the lowest polygon count of the three megastructures on the website. This process was
-					assisted by Half-Life 2's developer console, which allowed me to enable no-clip mode and fly around
-					the Citadel's in-game model, as seen in figure 2. This also aided me in accurately recreating the
-					animation of the Citadel transitioning into its "high alert" state, which is triggered in-game at
-					the start of the Route Kanal chapter.
+					subdivision tools. As a result of this very purposeful and meticulous modelling process, the
+					complete model has the lowest polygon count of the three megastructures on the website. This process
+					was assisted by Half-Life 2's developer console, which allowed me to enable no-clip mode and fly
+					around the Citadel's in-game model. This also aided me in accurately recreating the animation of the
+					Citadel transitioning into its "high alert" state, which is triggered in-game at the start of the
+					Route Kanal chapter.
 				</p>
-				<h2>Main Structure</h2>
-				<p>
-					I started my creation of the Citadel by creating an equilateral triangle which I then extruded
-					upwards to create the main body of the structure. I added the triangular pillar that runs up the
-					entirety of one side by subdividing the surface vertically into 4 sections and then moved the
-					central edge outwards. This was the strategy I used to create all similar extrusions on the
-					structure, although the majority don't span the entire height of the structure, thus requiring
-					horizontal subdivisions as well.
-				</p>
-				<p>
-					The middle section of the Citadel, where the "rib-like" structures are housed was created by first
-					adding horizontal subdivisions to the two faces opposite the triangular pillar. These subdivisions
-					added new faces to the model which I could then delete to create the gap in the tower. The edges
-					that were left behind could then be connected with new faces to create the walls of the gap.
-				</p>
-				<p>
-					Every animated part of the structure was created as a separate object in Blender. Many of these
-					parts were created by duplicating the main body of the structure and then resizing and deleting
-					faces to create the desired shape. The ribs are an exception to this, which were created from a
-					plane that I reshaped into the desired profile. Due to my inexperience with modelling the Citadel
-					and the other models on this website are largely
-					<a href="https://en.wikipedia.org/wiki/Manifold">non-manifold</a> which fortunately is not an issue
-					for most aspects of this project but did cause some issues when creating the ribs.
-				</p>
-				<h2>Surroundings</h2>
-				<div class="float-end m-2 d-flex flex-column justify-content-center align-items-center">
-					<img
-						src="./assets/curve-tube-modifier.webp"
-						class="img-2 figure-img"
-						alt="a screenshot of the curve to tube modifier in blender"
-					/>
-					<figcaption class="figure-caption">Figure 3: The modifier used to create the cables.</figcaption>
-				</div>
-				<p>
-					When creating the Citadel model I realised that it would be important to include some of the
-					surrounding environment to give more context of the Citadel's impressive scale that gives me the
-					sense of awe that draws me to megastructures. This is a philosophy I tried to follow for all models
-					on this website but is most important with the Citadel due to the cables that hang from its
-					superstructure to the surrounding city. Something that is a very recognisable aspect of the
-					Citadel's design.
-				</p>
-				<p>
-					After careful consideration and some experimentation, I decided to use Blender's
-					<a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve">Bézier curve</a> feature to create the
-					cables. This allowed me to easily give them a natural curve shape which was proving difficult to
-					achieve with basic extrusion techniques. I then used Blender's curve to tube modifier to give the
-					curves a 3D shape as seen in figure 3. To ground the cables in the city, I created a large circular
-					ground plane, but this did not adequately give context I desired alone.
-				</p>
-				<p>
-					In order to add more context to the scale of the structure, I decided to add some of the surrounding
-					buildings. As I did not want to spend hours modelling the entire city, I made a collection of six
-					different building models using the same techniques I used to create the Citadel. These models are
-					then randomly placed on the ground plane using Blender's "Scatter on Surface" modifier. In Poisson
-					Disk mode, this modifier allowed me to randomly distribute the buildings across the ground with a
-					minimum distance between them and random rotation. This adequately invoked the idea of a sprawling
-					city surrounding the Citadel even though it is very clearly just a scattering of a few building
-					models.
-				</p>
-				<h2>Textures and Animations</h2>
-				<p>
-					As mentioned earlier, this was the first model I created for this project, and as a result, it only
-					uses simple textures from the game. This is best shown in the textures of the surrounding buildings,
-					in which all detail is provided by the textures rather than the geometry, which are just simple
-					boxes. For the Citadel itself, I just used a simple metal texture, and did not give much regard for
-					the UV mapping of the model, which is still able to look good even with the stretched textures.
-				</p>
-				<p>
-					To animate the Citadel entering its "high alert" state, I used Blender's animation timeline. Due to
-					the mechanical nature of this transformation, many objects could have their keyframes copied. Most
-					notably here, is the five shield segments that retract into the main body. However, as each of these
-					have a different starting location, I animated their Delta Transform properties instead of the
-					normal location and rotation properties. This allowed me to copy the keyframes between each of the
-					segments without them all moving to the same location.
-				</p>
-
-				<br />
 				<div class="d-flex flex-column align-items-center my-4">
 					<div
 						data-bs-theme="light"
@@ -254,14 +167,43 @@
 								data-bs-slide-to="2"
 								aria-label="Slide 3"
 							></button>
+							<button
+								type="button"
+								data-bs-target="#modelling-carousel"
+								data-bs-slide-to="3"
+								aria-label="Slide 4"
+							></button>
 						</div>
 						<div class="carousel-inner w-75 rounded">
 							<div class="carousel-item active">
+								<img
+									src="./assets/modelling.webp"
+									class="d-block w-100"
+									alt="a screenshot of blender showing the citadel in edit mode"
+								/>
+								<div class="carousel-caption d-none d-md-block">
+									<h5>The Citadel Model in Edit Mode</h5>
+								</div>
+							</div>
+							<div class="carousel-item">
+								<img
+									src="./assets/ingame.webp"
+									class="d-block w-100"
+									alt="a screenshot of blender showing the citadel in edit mode"
+								/>
+								<div class="carousel-caption d-none d-md-block">
+									<h5>The Citadel Model in-game</h5>
+								</div>
+							</div>
+							<div class="carousel-item">
 								<img
 									src="./assets/building-uv.webp"
 									class="d-block w-100"
 									alt="a screenshot of blender showing the uv editing of one the surrounding buildings"
 								/>
+								<div class="carousel-caption d-none d-md-block">
+									<h5>The UV Map of One of The Buildings</h5>
+								</div>
 							</div>
 							<div class="carousel-item">
 								<img
@@ -269,13 +211,9 @@
 									class="d-block w-100"
 									alt="a screenshot of blender showing the bezier curves used to create the cables"
 								/>
-							</div>
-							<div class="carousel-item">
-								<img
-									src="./assets/modelling.webp"
-									class="d-block w-100"
-									alt="a screenshot of blender showing the citadel in edit mode"
-								/>
+								<div class="carousel-caption d-none d-md-block">
+									<h5>A Bezier Curve Used to Make the Cables</h5>
+								</div>
 							</div>
 						</div>
 						<button
@@ -297,10 +235,82 @@
 							<span class="visually-hidden">Next</span>
 						</button>
 					</div>
-					<figcaption class="figure-caption">
-						Figure 4: Screenshots from Blender of the Citadel model.
-					</figcaption>
 				</div>
+				<h2>Main Structure</h2>
+				<p>
+					I started my creation of the Citadel by creating an equilateral triangle which I then extruded
+					upwards to create the main body of the structure. I added the triangular pillar that runs up the
+					entirety of one side by subdividing the surface vertically into 4 sections and then moved the
+					central edge outwards. This was the strategy I used to create all similar extrusions on the
+					structure, although the majority do not span the entire height of the structure, thus requiring
+					horizontal subdivisions as well.
+				</p>
+				<p>
+					The middle section of the Citadel, where the "rib-like" structures are housed was created by first
+					adding horizontal subdivisions to the two faces opposite the triangular pillar. These subdivisions
+					added new faces to the model which I could then delete to create the gap in the tower. The edges
+					that were left behind could then be connected with new faces to create the walls of the gap.
+				</p>
+				<p>
+					Every animated part of the structure was created as a separate object in Blender. Many of these
+					parts were created by duplicating the main body of the structure and then resizing and deleting
+					faces to create the desired shape. The ribs are an exception to this, which were created from a
+					plane that I reshaped into the desired profile. Due to my inexperience with modelling the Citadel
+					and the other models on this website are largely
+					<a href="https://en.wikipedia.org/wiki/Manifold">non-manifold</a> which fortunately this is not an
+					issue for most aspects of this project but it did cause some issues when creating the ribs.
+				</p>
+				<h2>Surroundings</h2>
+				<div class="float-end m-2 d-flex flex-column justify-content-center align-items-center">
+					<img
+						src="./assets/curve-tube-modifier.webp"
+						class="img-2 figure-img"
+						alt="a screenshot of the curve to tube modifier in blender"
+					/>
+					<figcaption class="figure-caption">Figure 3: The modifier used to create the cables.</figcaption>
+				</div>
+				<p>
+					When creating the Citadel model I realised that it would be important to include some of the
+					surrounding environment to give more context of the Citadel's impressive scale. This gives me the
+					sense of awe that draws me to megastructures. This is a philosophy that I tried to follow for all
+					models on this website but it is most important with the Citadel due to the cables that hang from
+					its superstructure to the surrounding city. This is something that is a very recognisable aspect of
+					the Citadel's design.
+				</p>
+				<p>
+					After careful consideration and some experimentation, I decided to use Blender's
+					<a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve">Bézier curve</a> feature to create the
+					cables. This allowed me to easily give them a natural curve shape which was proving difficult to
+					achieve with basic extrusion techniques. I then used Blender's curve to tube modifier to give the
+					curves a 3D shape as seen in figure 3. To ground the cables in the city, I created a large circular
+					ground plane, but this alone did not adequately give context I desired alone.
+				</p>
+				<p>
+					In order to add more context to the scale of the structure, I decided to add some of the surrounding
+					buildings. As I did not want to spend hours modelling the entire city, I made a collection of six
+					different building models using the same techniques I used to create the Citadel. These models are
+					then randomly placed on the ground plane using Blender's "Scatter on Surface" modifier. In Poisson
+					Disk mode, this modifier allowed me to randomly distribute the buildings across the ground with a
+					minimum distance between them and random rotation. This adequately invoked the idea of a sprawling
+					city surrounding the Citadel even though it is very clearly just a scattering of a few building
+					models.
+				</p>
+				<h2>Textures and Animations</h2>
+				<p>
+					As mentioned earlier, this was the first model I created for this project, and as a result, it only
+					uses simple textures from the game. This is best shown in the textures of the surrounding buildings,
+					where all the detail is provided by the textures rather than the geometry, which are just simple
+					boxes. For the Citadel itself, I just used a simple metal texture, and did not give much regard for
+					the UV mapping of the model. This still looked good even with the stretched textures.
+				</p>
+				<p>
+					To animate the Citadel entering its "high alert" state, I used Blender's animation timeline. Due to
+					the mechanical nature of this transformation, many objects could have their keyframes copied. Most
+					notably here, are the five shield segments that retract into the main body. However, as each of
+					these have a different starting location, I animated their Delta Transform properties instead of the
+					normal location and rotation properties. This allowed me to copy the keyframes between each of the
+					segments without them all moving to the same location.
+				</p>
 
 				<h1>Interactivity</h1>
 				<p>
@@ -311,7 +321,7 @@
 					with many of the iconic sounds from the game. The system works by scheduling sounds to play at
 					random intervals between the specified minimum and maximum time using the
 					<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout">set timeout</a>
-					function. When a sound is scheduled to play, the system will pick a random location withing the city
+					function. When a sound is scheduled to play, the system will pick a random location within the city
 					to play the sound from, adding to the immersive experience. As some of the sounds are very loud,
 					fine tuning this system took a lot of trial and error to not overwhelm the user with too many
 					sounds. The configuration array can be seen in the code snippet below.
@@ -340,9 +350,9 @@ const sounds = [
 
 				<p>
 					The only other interactivity feature that is unique to the Citadel is the ability to trigger the
-					"high alert" animation using a button in the control panel. This animation can played in reverse by
-					clicking the button again, a feature that was achieved by setting three.js's
-					<code>AnimationAction.timeScale</code> property to negative one. This animation is accompanied by a
+					"high alert" animation using a button in the control panel. This animation can be played in reverse
+					by clicking the button again, a feature that was achieved by setting three.js's
+					<code>AnimationAction.timeScale</code> property to negative one. This animation is accompanied by
 					the Citadel's iconic alarm sound, which is played globally to convey the sense of how omnipresent
 					the Citadel and Combine's reach is.
 				</p>

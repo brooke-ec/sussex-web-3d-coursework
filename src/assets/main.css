@@ -104,3 +104,9 @@ sup a {
 math {
 	margin-bottom: 1rem;
 }
+
+.carousel-caption {
+	position: unset !important;
+	padding-top: 0.5rem !important;
+	padding-bottom: 2.25rem !important;
+}
