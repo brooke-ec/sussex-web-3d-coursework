@@ -77,8 +77,8 @@
 								Megastructures
 							</a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="/iterator/">Iterator</a></li>
 								<li><a class="dropdown-item" href="/citadel/">The Citadel</a></li>
+								<li><a class="dropdown-item" href="/iterator/">Iterator</a></li>
 								<li><a class="dropdown-item" href="/tower/">The Tower</a></li>
 							</ul>
 						</li>
@@ -109,11 +109,11 @@
 			<div class="border border-top-0 p-3">
 				<h1>Summary</h1>
 				<p>
-					The final megastructure I modelled The Tower from
+					The final megastructure I modelled was The Tower from
 					<a href="https://www.square-enix-games.com/">Square Enix</a>'s
 					<a href="https://store.steampowered.com/app/524220/NieRAutomata/">NieR: Automata</a>. The Tower was
 					the model I was most worried about creating, as unlike the other two megastructures it features
-					hundreds of graceful, organic curves. A stark difference from the the mostly geometric shapes of the
+					hundreds of graceful, organic curves. A stark difference from the mostly geometric shapes of the
 					Citadel and Iterator. However, I was able to overcome these challenges and now I consider the Tower
 					to be my favourite model of the three. You can see the high quality render of the model in figure 1
 					below, which is used on the home page. For this render I used some tree assets by
@@ -151,7 +151,7 @@
 					shape I wanted, and the "Curve to Tube" modifier to give the curves a 3D shape. This was very
 					successful in achieving the look I wanted, and was a lot easier than trying to achieve the same
 					result with basic extrusion techniques. Once the curves were in place, I merged them with the pillar
-					geometry using the "Geometry Input" modifier. This resulted in the curves being duplicated by the
+					geometry using the geometry input modifier. This resulted in the curves being duplicated by the
 					array modifier, which effectively tripled the amount of curves I had, decreasing the amount of work
 					I had to do.
 				</p>
@@ -256,10 +256,10 @@
 				<p>
 					The Tower itself is a pure white colour, so I did not have to worry about texturing the main
 					structure. However, I wanted to add the surrounding city to give the model's scale more context. To
-					achieve I created a collection of skyscrapers using basic extrusion and subdivision tools. However,
-					these new buildings needed textures. To fulfil this requirement, I used Blender's powerful
+					achieve this I created a collection of skyscrapers using basic extrusion and subdivision tools.
+					However, these new buildings needed textures. To fulfil this requirement, I used Blender's powerful
 					<a href="https://docs.blender.org/manual/en/latest/render/shader_nodes/index.html">Shader Node</a>
-					system to create procedural textures for the city, seen in figure 3. This used the "Brick Texture"
+					system to create procedural textures for the city, seen in figure 2. This used the "Brick Texture"
 					node to create windows, which by default only maps itself onto the top surface of an object. As a
 					result some extra nodes were needed to make every side appear as if it were the top. The events of
 					NieR: Automata take place in the distant future after humanity has been driven to extinction, as a
@@ -272,8 +272,8 @@
 				<p>
 					Unfortunately, three.js does not support procedural shaders created in Blender and so I had to use
 					Blender to "bake" the shader into a regular image texture which could then be used in three.js. This
-					baking process uses a <code>4096x4096</code> image which was made the model very large. This is what
-					led me to set up the GLTF compression settings talked about on the <a href="..">general tab</a>.
+					baking process uses a <code>4096x4096</code> image which made the model very large. This is what led
+					me to set up the GLTF compression settings talked about on the <a href="..">general tab</a>.
 				</p>
 				<figure class="d-flex flex-column align-items-center">
 					<img
@@ -289,33 +289,33 @@
 				<figure class="float-end m-2 d-flex flex-column justify-content-center align-items-center">
 					<img src="./assets/non-manifold.webp" class="img-2 rounded figure-img" alt="an" />
 					<figcaption class="figure-caption">
-						Figure 3: A look ath the interior faces inside the model. Every face should be red.
+						Figure 3: A look at the interior faces inside the model. Every face should be red.
 					</figcaption>
 				</figure>
 				<p>
-					Deciding what interactivity to add to The Tower was no easy task. Unlike with the other
-					megastructures, there was no obvious choice and so I decided to do a rigidbody simulation of the
+					Deciding what interactivity to add to The Tower was not an easy task. Unlike the other
+					megastructures, there was not an obvious choice and so I decided to do a rigidbody simulation of the
 					Tower collapsing. This is something that happens at the very end of the game, and so it felt fitting
 					to add.
 				</p>
 				<p>
-					While preparing for the physics simulation, I encountered many challenges while. Due to my
-					inexperience with modelling in Blender, I had created a lot of
-					<a href="https://en.wikipedia.org/wiki/Manifold">non-manifold</a> geometry. This is was caused by my
+					While preparing for the physics simulation, I encountered many challenges. Due to my inexperience
+					with modelling in Blender, I had created a lot of
+					<a href="https://en.wikipedia.org/wiki/Manifold">non-manifold</a> geometry. This was caused by my
 					extrusion for creating the pillars earlier, which had left interior faces at every extrusion, seen
-					in figure 4. This was a problem as the process needed all objects to be manifold and so I had to fix
-					my mesh. I first tried to manually fix the mesh by deleting the interior faces, but there were so
-					many and they were all interconnected making this unviable. However, I was able to use Blender's
+					in figure 3. This was a problem as the process needed all objects to be manifold, requiring me to
+					fix my mesh. I first tried to manually fix the mesh by deleting the interior faces, but there were
+					so many and they were all interconnected making this unviable. However, I was able to use Blender's
 					"Remesh" modifier to repair the mesh. The modifier works by recreating the geometry of the model
-					using voxels, which was fine as that is the aesthetic I was going for anyway.
+					using voxels, which was acceptable as it is the aesthetic I was going for anyway.
 				</p>
 				<p>
 					In order to make the Tower collapse into lots of small pieces, I used Blender's
-					<a href="https://extensions.blender.org/add-ons/cell-fracture/">Cell Fracture</a> add-on. Which
+					<a href="https://extensions.blender.org/add-ons/cell-fracture/">Cell Fracture</a> add-on. This addon
 					provides a powerful way to break up manifold geometry into smaller pieces. The last step was to set
-					up the rigidbody simulation, which was a simple process thanks to Blender's powerful physics engine.
-					I baked the final into normal keyframes which allowed me to export the animation as part of the GLTF
-					file and play it back in three.js along with a sound effect by
+					up the rigidbody simulation, which was a simple process as a result of Blender's powerful physics
+					engine. I baked the final simulation into normal keyframes which allowed me to export the animation
+					as part of the GLTF file and play it back in three.js along with a sound effect by
 					<a
 						href="https://pixabay.com/sound-effects/nature-052256-cracking-earthquake-cracking-soil-cracking-stone-86770/"
 						>Freesound Community</a

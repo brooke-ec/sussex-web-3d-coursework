@@ -77,8 +77,8 @@
 								Megastructures
 							</a>
 							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="/iterator/">Iterator</a></li>
 								<li><a class="dropdown-item" href="/citadel/">The Citadel</a></li>
+								<li><a class="dropdown-item" href="/iterator/">Iterator</a></li>
 								<li><a class="dropdown-item" href="/tower/">The Tower</a></li>
 							</ul>
 						</li>
@@ -112,14 +112,14 @@
 					The second megastructure I added was an Iterator Superstructure from
 					<a href="https://videocultmedia.com/">Videocult</a>'s
 					<a href="https://store.steampowered.com/app/312520/Rain_World/">Rain World</a>. An Iterator
-					Superstructure or is a gigantic metal structure that towers above the clouds, supported by eight
-					legs. A prominent feature of an Iterator is is the
+					Superstructure is a gigantic metal structure that towers above the clouds, supported by eight legs.
+					A prominent feature of an Iterator is the
 					<a href="https://en.wikipedia.org/wiki/Greeble#cite_note-6">greebles</a> that cover its surface.
 					This presents an interesting challenge for modelling, as heavy greebling can easily lead to a very
 					high polygon count. In figure 1 you can see a high quality render of the final model, which was used
 					on the home page of the website for both the card and hero video. For this render I did not worry
-					much about the polygon count and I added volumetric clouds around the base of the structure to give
-					a better sense of scale.
+					too much about the polygon count and I added volumetric clouds around the base of the structure to
+					give a better sense of scale.
 				</p>
 				<figure class="d-flex flex-column align-items-center">
 					<img
@@ -137,8 +137,8 @@
 					<a href="https://www.blender.org/">Blender</a>. As Rain World is a 2D game, I had only a single
 					image of the superstructure to use as reference which can be seen on the
 					<a href="../../iterator/">Iterator page</a>. The Iterator is fundamentally a very simple structure,
-					with a cuboid supported by eight legs. The complexity comes from the greebles that cover the surface
-					of the structure. Aside from greebling, the model only requires the legs and the city on top to be
+					a cuboid supported by eight legs. The complexity comes from the greebles that cover the surface of
+					the structure. Aside from greebling, the model only requires the legs and the city on top to be
 					modelled. The city was modelled using the "add cube" tool and subdividing the top faces to create a
 					more interesting silhouette. The legs were modelled with heavy use of the mirror and array
 					modifiers, which excel for repetitive tasks such as this.
@@ -147,15 +147,15 @@
 				<p>
 					The greelbing on the Iterator Superstructure is separated into two categories. Large, purposefully
 					placed greebles and small randomly placed greebles. Both are modelled using the same process, many
-					of which makes heavy use of the "spin" tool to create interweaving pipes and cables. The large
+					of which make heavy use of the "spin" tool to create interweaving pipes and cables. The large
 					greebles were purposefully placed on the model to make it look more functional, instead of the
 					visual noise added by the small greebles. The model without any of the small greebles can be seen in
 					figure 2. The small greebles were added using Blender's "Scatter on Surface" modifier which randomly
 					distributes objects across the surface of a model. I created a collection of eight different greeble
 					models to use with this modifier, which can be seen below. I took care to ensure these models were
 					very low poly to avoid the polygon count of the model ballooning out of control. However, even with
-					this the finished model have over 100,000 polygons which is very high for a model to be used in a
-					web application.
+					this the finished model has over 100,000 polygons which is very high for a model used in a web
+					application.
 				</p>
 				<div class="d-flex justify-content-center align-items-center gap-4 my-4 flex-wrap">
 					<figure class="d-flex flex-column align-items-center">
@@ -328,8 +328,8 @@
 				<p>
 					Unfortunately, three.js does not support procedural shaders created in Blender and so I had to use
 					Blender to "bake" the shader into a regular image texture which could then be used in three.js. This
-					baking process uses a <code>4096x4096</code> image which was made the model very large. This is what
-					led me to set up the GLTF compression settings talked about on the <a href="..">general tab</a>.
+					baking process uses a <code>4096x4096</code> image which made the model very large. This is what led
+					me to set up the GLTF compression settings talked about on the <a href="..">general tab</a>.
 				</p>
 				<figure class="d-flex flex-column align-items-center">
 					<img
@@ -375,7 +375,7 @@
 					This is one of the distinctive features that makes Iterators recognisable, and so I decided to
 					implement it on this website. To achieve this, I used the
 					<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout">set timeout</a>
-					function to randomly schedule the effect. When the effect is triggered, I move move a
+					function to randomly schedule the effect. When the effect is triggered, I move a
 					<code>PointLight</code> instance to a random location underneath the superstructure and flash it
 					twice using three more calls to <code>setTimeout</code>. I also play a random thunder sound from the
 					same location using three.js's <code>PositionalAudio</code> class. This creates a nice audiovisual
