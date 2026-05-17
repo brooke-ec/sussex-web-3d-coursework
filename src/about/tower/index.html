@@ -153,18 +153,104 @@
 					result with basic extrusion techniques. Once the curves were in place, I merged them with the pillar
 					geometry using the "Geometry Input" modifier. This resulted in the curves being duplicated by the
 					array modifier, which effectively tripled the amount of curves I had, decreasing the amount of work
-					I had to do. You can see the model without the array modifier in figure 2 below.
+					I had to do.
 				</p>
-				<div class="d-flex flex-column align-items-center">
-					<img
-						src="./assets/no-array.webp"
-						class="img-2 figure-img rounded"
-						alt="render of my citadel model"
-					/>
-					<figcaption class="figure-caption">
-						Figure 2: My Tower model without the array modifier, showing the curves before they are
-						duplicated.
-					</figcaption>
+				<div class="d-flex flex-column align-items-center my-4">
+					<div
+						data-bs-theme="light"
+						id="modelling-carousel"
+						data-bs-ride="carousel"
+						class="carousel slide d-flex flex-column align-items-center w-75"
+					>
+						<div class="carousel-indicators">
+							<button
+								type="button"
+								data-bs-target="#modelling-carousel"
+								data-bs-slide-to="0"
+								class="active"
+								aria-current="true"
+								aria-label="Slide 1"
+							></button>
+							<button
+								type="button"
+								data-bs-target="#modelling-carousel"
+								data-bs-slide-to="1"
+								aria-label="Slide 2"
+							></button>
+							<button
+								type="button"
+								data-bs-target="#modelling-carousel"
+								data-bs-slide-to="2"
+								aria-label="Slide 3"
+							></button>
+							<button
+								type="button"
+								data-bs-target="#modelling-carousel"
+								data-bs-slide-to="3"
+								aria-label="Slide 4"
+							></button>
+						</div>
+						<div class="carousel-inner w-75 rounded">
+							<div class="carousel-item active">
+								<img
+									src="./assets/no-array.webp"
+									class="d-block w-100"
+									alt="a screenshot of blender showing the tower without the array modifier"
+								/>
+								<div class="carousel-caption d-none d-md-block">
+									<h5>The Model Without the Array Modifier</h5>
+								</div>
+							</div>
+							<div class="carousel-item">
+								<img
+									src="./assets/edit-mode.webp"
+									class="d-block w-100"
+									alt="a screenshot of blender showing the tower in edit mode"
+								/>
+								<div class="carousel-caption d-none d-md-block">
+									<h5>The Tower in Edit Mode</h5>
+								</div>
+							</div>
+							<div class="carousel-item">
+								<img
+									src="./assets/city-baked.webp"
+									class="d-block w-100"
+									alt="a screenshot of blender showing the baked city texture on the tower model"
+								/>
+								<div class="carousel-caption d-none d-md-block">
+									<h5>The UV Map and Baked City Texture</h5>
+								</div>
+							</div>
+							<div class="carousel-item">
+								<img
+									src="./assets/bezier-curve.webp"
+									class="d-block w-100"
+									alt="a screenshot of blender showing the bezier curves"
+								/>
+								<div class="carousel-caption d-none d-md-block">
+									<h5>A Bezier Curve Used to Make The Tower</h5>
+								</div>
+							</div>
+						</div>
+						<button
+							class="carousel-control-prev"
+							type="button"
+							data-bs-target="#modelling-carousel"
+							data-bs-slide="prev"
+						>
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						<button
+							class="carousel-control-next"
+							type="button"
+							data-bs-target="#modelling-carousel"
+							data-bs-slide="next"
+						>
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>
+					</div>
 				</div>
 				<h2>Texturing</h2>
 				<p>
