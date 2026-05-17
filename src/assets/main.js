@@ -197,7 +197,7 @@ void main() {
 	});
 
 	const glitcha = new THREE.Audio(listener);
-	new THREE.AudioLoader().load("/assets/glitch.mp3", (buffer) => {
+	new THREE.AudioLoader().load("../assets/glitch.mp3", (buffer) => {
 		glitcha.setBuffer(buffer);
 		glitcha.setLoop(true);
 	});
