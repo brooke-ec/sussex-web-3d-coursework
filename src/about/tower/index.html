@@ -113,10 +113,10 @@
 					<a href="https://www.square-enix-games.com/">Square Enix</a>'s
 					<a href="https://store.steampowered.com/app/524220/NieRAutomata/">NieR: Automata</a>. The Tower was
 					the model I was most worried about creating, as unlike the other two megastructures it features
-					hundreds of graceful, organic curves. A stark difference from the mostly geometric shapes of the
-					Citadel and Iterator. However, I was able to overcome these challenges and now I consider the Tower
-					to be my favourite model of the three. You can see the high quality render of the model in figure 1
-					below, which is used on the home page. For this render I used some tree assets by
+					hundreds of graceful, organic curves whic is a stark difference to the mostly geometric shapes of
+					the Citadel and Iterator. However, I was able to overcome these challenges and now I consider the
+					Tower to be my favourite model of the three. You can see the high quality render of the model in
+					figure 1 below, which is used on the home page. For this render I used some tree assets by
 					<a href="https://sketchfab.com/FlowOff">Vova Truestory</a> on Sketchfab.
 				</p>
 				<figure class="d-flex flex-column align-items-center">
@@ -132,17 +132,17 @@
 				<h1>Modelling</h1>
 				<p>
 					To create this model I used the 3D modelling software
-					<a href="https://www.blender.org/">Blender</a>. For reference I used some
+					<a href="https://www.blender.org/">Blender</a>. I used some
 					<a href="https://x.com/ThreeEyedGemini/status/1675221677335105537"
 						>screenshots of the ingame model</a
 					>
-					extracted by Twitter user @ThreeEyedGemini. As the third model that I made, I felt confident to use
-					many modifiers to achieve the Tower's look. I started by making the central tower, which I made by
-					applying Blender's "Screw" modifier to a hexagon profile. This created the twisted look that the
-					tower is known for. I progressively scaled edge loops of this central tower to increase its width in
-					the center. I then created the three large pillars by subdiving the the top faces and selectively
-					extruding it to give that iconic voxelised look. The pillars were then duplicated using Blender's
-					"Array" modifier to create the other two pillars.
+					extracted by Twitter user @ThreeEyedGemini as reference images. As the third model that I made, I
+					felt confident to use many modifiers to achieve the Tower's look. I started by making the central
+					tower, which I made using Blender's "Screw" modifier to a hexagon profile. This modifier created the
+					twisted look that the tower is known for. I progressively scaled edge loops of this central tower to
+					increase its width in the center. I then created the three large pillars by subdiving the the top
+					faces and selectively extruding it to give that iconic voxelised look. I then duplicated the initial
+					pillar using Blender's "Array" modifier to create the other two pillars.
 				</p>
 				<p>
 					The final, and most important step was to add the long curves connecting the pillars to the central
@@ -152,8 +152,8 @@
 					successful in achieving the look I wanted, and was a lot easier than trying to achieve the same
 					result with basic extrusion techniques. Once the curves were in place, I merged them with the pillar
 					geometry using the geometry input modifier. This resulted in the curves being duplicated by the
-					array modifier, which effectively tripled the amount of curves I had, decreasing the amount of work
-					I had to do.
+					array modifier, which effectively tripled the amount of curves I had, increasing the density of
+					curves without any extra work.
 				</p>
 				<div class="d-flex flex-column align-items-center my-4">
 					<div
@@ -256,18 +256,19 @@
 				<p>
 					The Tower itself is a pure white colour, so I did not have to worry about texturing the main
 					structure. However, I wanted to add the surrounding city to give the model's scale more context. To
-					achieve this I created a collection of skyscrapers using basic extrusion and subdivision tools.
-					However, these new buildings needed textures. To fulfil this requirement, I used Blender's powerful
+					achieve this, I created a collection of skyscrapers using basic extrusion and subdivision tools. To
+					create textures for these models, I used Blender's powerful
 					<a href="https://docs.blender.org/manual/en/latest/render/shader_nodes/index.html">Shader Node</a>
 					system to create procedural textures for the city, seen in figure 2. This used the "Brick Texture"
 					node to create windows, which by default only maps itself onto the top surface of an object. As a
 					result some extra nodes were needed to make every side appear as if it were the top. The events of
-					NieR: Automata take place in the distant future after humanity has been driven to extinction, as a
-					result there are large vines growing over the city. To achieve this, I used the "<a
+					NieR: Automata take place in the distant future after humanity has been driven to extinction, as
+					shown by the large vines and plant life reclaiming the city. To achieve this, I used the "<a
 						href="https://en.wikipedia.org/wiki/Voronoi_diagram"
 						>Voronoi</a
 					>
-					Texture" node to create interconnecting lines which I used as a mask to overlay a green colour.
+					Texture" node to create interconnecting lines which I used as a mask to overlay a green colour
+					representing the vines.
 				</p>
 				<p>
 					Unfortunately, three.js does not support procedural shaders created in Blender and so I had to use
@@ -304,18 +305,19 @@
 					<a href="https://en.wikipedia.org/wiki/Manifold">non-manifold</a> geometry. This was caused by my
 					extrusion for creating the pillars earlier, which had left interior faces at every extrusion, seen
 					in figure 3. This was a problem as the process needed all objects to be manifold, requiring me to
-					fix my mesh. I first tried to manually fix the mesh by deleting the interior faces, but there were
-					so many and they were all interconnected making this unviable. However, I was able to use Blender's
-					"Remesh" modifier to repair the mesh. The modifier works by recreating the geometry of the model
-					using voxels, which was acceptable as it is the aesthetic I was going for anyway.
+					make my mesh manifold. I first tried to manually fix the mesh by deleting the interior faces, but
+					there were a very large number of interconnected faces, making this unviable. However, I was able to
+					use Blender's Remesh modifier to repair the mesh. The modifier works by recreating the geometry of
+					the model using voxels, which was acceptable as it is the aesthetic I was going for anyway.
 				</p>
 				<p>
 					In order to make the Tower collapse into lots of small pieces, I used Blender's
 					<a href="https://extensions.blender.org/add-ons/cell-fracture/">Cell Fracture</a> add-on. This addon
 					provides a powerful way to break up manifold geometry into smaller pieces. The last step was to set
 					up the rigidbody simulation, which was a simple process as a result of Blender's powerful physics
-					engine. I baked the final simulation into normal keyframes which allowed me to export the animation
-					as part of the GLTF file and play it back in three.js along with a sound effect by
+					engine. I baked the final simulation of the collapse into normal keyframes which allowed me to
+					export the animation as part of the GLTF file and play it back in three.js along with a sound effect
+					by
 					<a
 						href="https://pixabay.com/sound-effects/nature-052256-cracking-earthquake-cracking-soil-cracking-stone-86770/"
 						>Freesound Community</a
@@ -325,8 +327,8 @@
 					Unfortunately the process of fracturing the model into hundreds of pieces and then baking the
 					physics simulation made the GLTF file slightly laggy in the browser. While the polygon count of the
 					model only increased by around 1,500 faces, the number of draw calls increased dramatically as each
-					piece of the fractured model is a separate mesh. As a result I had to disable shadows on this page
-					to keep the framerate at an acceptable level.
+					piece of the fractured model is a separate mesh. As a result shadows are disabled on this page to
+					improve performance.
 				</p>
 			</div>
 		</main>

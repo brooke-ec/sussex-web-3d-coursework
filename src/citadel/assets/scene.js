@@ -63,5 +63,6 @@ loader.load("./assets/citadel_alert.ogg", (buffer) => {
 
 bindtoggle("alert-btn", false, "⚠️ Set Low Alert", "⚠️ Set High Alert", (value) => {
 	if (value) alarm.play();
+	else alarm.stop();
 	play(value);
 });

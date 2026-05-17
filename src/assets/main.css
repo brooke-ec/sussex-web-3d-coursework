@@ -110,3 +110,7 @@ math {
 	padding-top: 0.5rem !important;
 	padding-bottom: 2.25rem !important;
 }
+
+.nav-tabs .nav-link {
+	font-weight: 500 !important;
+}

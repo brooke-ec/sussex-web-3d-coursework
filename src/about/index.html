@@ -129,10 +129,20 @@
 					For my website I have created an archive showcasing my favourite
 					<a href="https://en.wikipedia.org/wiki/Megastructure">megastructures</a>
 					from fiction. I have created three models of these megastructures using the 3D modelling software
-					<a href="https://www.blender.org/">Blender</a>. This tab will explore the general design and
-					implementation decisions shared by all three models. You can explore the modelling process and
-					interactivity development for each model using the tabs above.
+					<a href="https://www.blender.org/">Blender</a>.
 				</p>
+				<p>
+					This tab will explore the general design and implementation decisions shared by all three models.
+					You can explore the modelling process and interactivity development for each megastructure using the
+					tabs above and the buttons below:
+				</p>
+
+				<ul class="d-flex flex-row flex-sm-row nav mb-4 gap-2">
+					<a class="btn btn-secondary" href="./citadel/">The Citadel</a>
+					<a class="btn btn-secondary" href="./iterator/">Iterator Superstructure</a>
+					<a class="btn btn-secondary" href="./tower/">The Tower</a>
+					<a class="btn btn-secondary" href="./sources/">Sources</a>
+				</ul>
 
 				<h1>Design</h1>
 				<figure class="float-end m-2 d-flex flex-column justify-content-center align-items-center">
@@ -284,7 +294,7 @@
 					><mo>)</mo><mo>)</mo></math
 				>
 				<p>
-					The improve the performance of loading sound effects onto the web application, I encoded every sound
+					To improve the performance of loading sound effects onto the web application, I encoded every sound
 					as a <a href="https://en.wikipedia.org/wiki/Ogg">Ogg Vorbis</a> file which I found had a better
 					compression ratio than mp3. Another difficult I faced was due to browser autoplay policies, ambience
 					sounds can only be played after the user has interacted with the page. To handle this situation, I
@@ -447,6 +457,11 @@ void main() {
 							<td>Cannot read carousel captions as they are the same colour as the image.</td>
 							<td class="text-danger">Critical</td>
 							<td>Solved. Captions now display below the carousel.</td>
+						</tr>
+						<tr>
+							<td>The Citadel alarm does not stop on low alert.</td>
+							<td class="text-info-emphasis">Minor</td>
+							<td>Solved. The alarm now stops when clicking low alert.</td>
 						</tr>
 						<tr>
 							<td>The Iterator ambience just sounds like white noise.</td>

@@ -255,10 +255,10 @@
 					Every animated part of the structure was created as a separate object in Blender. Many of these
 					parts were created by duplicating the main body of the structure and then resizing and deleting
 					faces to create the desired shape. The ribs are an exception to this, which were created from a
-					plane that I reshaped into the desired profile. Due to my inexperience with modelling the Citadel
+					plane that I reshaped into the desired profile. Due to my inexperience with modelling, the Citadel
 					and the other models on this website are largely
-					<a href="https://en.wikipedia.org/wiki/Manifold">non-manifold</a> which fortunately this is not an
-					issue for most aspects of this project but it did cause some issues when creating the ribs.
+					<a href="https://en.wikipedia.org/wiki/Manifold">non-manifold</a>. Fortunately this is not an issue
+					for most aspects of this project but it did cause some issues when creating the ribs.
 				</p>
 				<h2>Surroundings</h2>
 				<figure class="float-end m-2 d-flex flex-column justify-content-center align-items-center">
@@ -273,8 +273,8 @@
 					When creating the Citadel model I realised that it would be important to include some of the
 					surrounding environment to give more context of the Citadel's impressive scale. This gives me the
 					sense of awe that draws me to megastructures. This is a philosophy that I tried to follow for all
-					models on this website but it is most important with the Citadel due to the cables that hang from
-					its superstructure to the surrounding city. This is something that is a very recognisable aspect of
+					models on this website but it is most important with the Citadel due to the cables that hang between
+					its superstructure and the surrounding city. This is something that is a very recognisable aspect of
 					the Citadel's design.
 				</p>
 				<p>
@@ -283,7 +283,7 @@
 					cables. This allowed me to easily give them a natural curve shape which was proving difficult to
 					achieve with basic extrusion techniques. I then used Blender's "Curve to Tube" modifier to give the
 					curves a 3D shape as seen in figure 3. To ground the cables in the city, I created a large circular
-					ground plane, but this alone did not adequately give context I desired alone.
+					ground plane, but this alone did not adequately give context I desired.
 				</p>
 				<p>
 					In order to add more context to the scale of the structure, I decided to add some of the surrounding
@@ -291,9 +291,9 @@
 					different building models using the same techniques I used to create the Citadel. These models are
 					then randomly placed on the ground plane using Blender's "Scatter on Surface" modifier. In Poisson
 					Disk mode, this modifier allowed me to randomly distribute the buildings across the ground with a
-					minimum distance between them and random rotation. This adequately invoked the idea of a sprawling
-					city surrounding the Citadel even though it is very clearly just a scattering of a few building
-					models.
+					minimum distance between them and random rotation. This invoked the idea of a sprawling city
+					surrounding the Citadel without the need to manually design the entire city, a process which would
+					have taken a long time.
 				</p>
 				<h2>Textures and Animations</h2>
 				<p>
@@ -305,11 +305,11 @@
 				</p>
 				<p>
 					To animate the Citadel entering its "high alert" state, I used Blender's animation timeline. Due to
-					the mechanical nature of this transformation, many objects could have their keyframes copied. Most
-					notably here, are the five shield segments that retract into the main body. However, as each of
-					these have a different starting location, I animated their Delta Transform properties instead of the
-					normal location and rotation properties. This allowed me to copy the keyframes between each of the
-					segments without them all moving to the same location.
+					the mechanical nature of this transformation, many objects could have their keyframes duplicated,
+					most notably, the five shield segments that retract into the main body. However, each of these have
+					a different starting location, and so animating their transform property would snap them all to the
+					same location. As a result, I animated their Delta Transform properties instead. This allowed me to
+					copy the keyframes between each of the segments without them all moving to the same location.
 				</p>
 
 				<h1>Interactivity</h1>
