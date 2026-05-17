@@ -404,9 +404,9 @@ varying vec2 vUv;
 void main() {
 	vec4 base = texture2D(uTexture, vUv);
 
-	vec3 sunsetLow  = vec3(1.0,  0.38, 0.04);
-	vec3 sunsetMid  = vec3(0.95, 0.38, 0.28);
-	vec3 sunsetHigh = vec3(0.12, 0.04, 0.28);
+	vec3 sunsetLow  = vec3(1.0,  0.40, 0.05);
+	vec3 sunsetMid  = vec3(0.95, 0.40, 0.30);
+	vec3 sunsetHigh = vec3(0.10, 0.05, 0.30);
 	vec3 sunset = mix(mix(sunsetLow, sunsetMid, vUv.y * 1.5), sunsetHigh, vUv.y);
 
 	float blueness = base.b / max(base.r, base.g) - 0.4;
@@ -414,6 +414,60 @@ void main() {
 	gl_FragColor = vec4(result, 1.0);
 }
 				</div>
+
+				<h1>Testing</h1>
+				<p>
+					The entire website was tested during development by regularly loading it in the latest versions of
+					Chrome, Firefox and Edge. Additionally the accessibility of the website was audited using
+					<a href="https://developer.chrome.com/docs/lighthouse/overview">Lighthouse</a>, and after some
+					modifications it received a perfect score of 100 on every page. Some basic user testing was also
+					conducted with participants consisting of a few of my peers in this module. Their feedback was
+					generally very positive, although any issues they found have been compiled into the table below.
+				</p>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Issue</th>
+							<th scope="col">Criticality</th>
+							<th scope="col">Solution</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Dropdown in navigation bar does not work on about pages.</td>
+							<td class="text-danger">Critical</td>
+							<td>Fixed. This was caused by an unclosed HTML tag.</td>
+						</tr>
+						<tr>
+							<td>The control panel should start expanded as I didn't know to open it.</td>
+							<td class="text-danger">Critical</td>
+							<td>Solved. The control panel now starts opened.</td>
+						</tr>
+						<tr>
+							<td>Cannot read carousel captions as they are the same colour as the image.</td>
+							<td class="text-danger">Critical</td>
+							<td>Solved. Captions now display below the carousel.</td>
+						</tr>
+						<tr>
+							<td>The Iterator ambience just sounds like white noise.</td>
+							<td class="text-info-emphasis">Minor</td>
+							<td>Not fixed. A better wind sound could be found eventually.</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h1>Publication</h1>
+				<p>
+					The website has been deployed at
+					<a href="https://users.sussex.ac.uk/~br257/w3d/">https://users.sussex.ac.uk/~br257/w3d/</a>.
+					Additionally the source code has been published on GitHub at
+					<a href="https://github.com/brooke-ec/sussex-web-3d-coursework"
+						>https://github.com/brooke-ec/sussex-web-3d-coursework</a
+					>. The repository is designed to be used with the
+					<a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer">Live Server</a>
+					extension for Visual Studio Code, but will work if the <code>src</code> directory is hosted by any
+					static fileserver.
+				</p>
 			</div>
 
 			<script src="./assets/about.js" type="module"></script>
@@ -428,7 +482,7 @@ void main() {
 				</div>
 				<div class="d-flex gap-2">
 					<a
-						href="https://github.com/brooke-ec/web-3d-applications"
+						href="https://github.com/brooke-ec/sussex-web-3d-coursework"
 						target="_blank"
 						aria-label="GitHub repository"
 					>

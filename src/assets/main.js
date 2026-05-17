@@ -77,9 +77,9 @@ varying vec2 vUv;
 void main() {
 	vec4 base = texture2D(uTexture, vUv);
 
-	vec3 sunsetLow  = vec3(1.0,  0.38, 0.04);
-	vec3 sunsetMid  = vec3(0.95, 0.38, 0.28);
-	vec3 sunsetHigh = vec3(0.12, 0.04, 0.28);
+	vec3 sunsetLow  = vec3(1.0,  0.40, 0.05);
+	vec3 sunsetMid  = vec3(0.95, 0.40, 0.30);
+	vec3 sunsetHigh = vec3(0.10, 0.05, 0.30);
 	vec3 sunset = mix(mix(sunsetLow, sunsetMid, vUv.y * 1.5), sunsetHigh, vUv.y);
 
 	float blueness = base.b / max(base.r, base.g) - 0.4;
