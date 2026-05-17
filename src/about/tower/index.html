@@ -119,7 +119,7 @@
 					below, which is used on the home page. For this render I used some tree assets by
 					<a href="https://sketchfab.com/FlowOff">Vova Truestory</a> on Sketchfab.
 				</p>
-				<div class="d-flex flex-column align-items-center">
+				<figure class="d-flex flex-column align-items-center">
 					<img
 						src="./assets/render.webp"
 						class="img-half figure-img rounded"
@@ -128,7 +128,7 @@
 					<figcaption class="figure-caption">
 						Figure 1: The high quality render of my Tower model used on the home page.
 					</figcaption>
-				</div>
+				</figure>
 				<h1>Modelling</h1>
 				<p>
 					To create this model I used the 3D modelling software
@@ -191,46 +191,46 @@
 							></button>
 						</div>
 						<div class="carousel-inner w-75 rounded">
-							<div class="carousel-item active">
+							<figure class="carousel-item active">
 								<img
 									src="./assets/no-array.webp"
 									class="d-block w-100"
 									alt="a screenshot of blender showing the tower without the array modifier"
 								/>
 								<div class="carousel-caption d-none d-md-block">
-									<h5>The Model Without the Array Modifier</h5>
+									<figcaption>The model without the array modifier</figcaption>
 								</div>
-							</div>
-							<div class="carousel-item">
+							</figure>
+							<figure class="carousel-item">
 								<img
 									src="./assets/edit-mode.webp"
 									class="d-block w-100"
 									alt="a screenshot of blender showing the tower in edit mode"
 								/>
 								<div class="carousel-caption d-none d-md-block">
-									<h5>The Tower in Edit Mode</h5>
+									<figcaption>The tower in edit mode</figcaption>
 								</div>
-							</div>
-							<div class="carousel-item">
+							</figure>
+							<figure class="carousel-item">
 								<img
 									src="./assets/city-baked.webp"
 									class="d-block w-100"
 									alt="a screenshot of blender showing the baked city texture on the tower model"
 								/>
 								<div class="carousel-caption d-none d-md-block">
-									<h5>The UV Map and Baked City Texture</h5>
+									<figcaption>The UV map and baked city texture</figcaption>
 								</div>
-							</div>
-							<div class="carousel-item">
+							</figure>
+							<figure class="carousel-item">
 								<img
 									src="./assets/bezier-curve.webp"
 									class="d-block w-100"
 									alt="a screenshot of blender showing the bezier curves"
 								/>
 								<div class="carousel-caption d-none d-md-block">
-									<h5>A Bezier Curve Used to Make The Tower</h5>
+									<figcaption>A Bezier curve used to make The Tower</figcaption>
 								</div>
-							</div>
+							</figure>
 						</div>
 						<button
 							class="carousel-control-prev"
@@ -275,28 +275,23 @@
 					baking process uses a <code>4096x4096</code> image which was made the model very large. This is what
 					led me to set up the GLTF compression settings talked about on the <a href="..">general tab</a>.
 				</p>
-				<div class="d-flex flex-column align-items-center">
+				<figure class="d-flex flex-column align-items-center">
 					<img
 						src="./assets/shader.webp"
 						class="img-half figure-img rounded"
 						alt="a screenshot of the shader nodes used to create the building texture for the city"
 					/>
 					<figcaption class="figure-caption">
-						Figure 3: The shader nodes to create the building texture used on the surrounding city.
+						Figure 2: The shader nodes to create the building texture used on the surrounding city.
 					</figcaption>
-				</div>
+				</figure>
 				<h1>Interactivity</h1>
-				<div class="float-end m-2 d-flex flex-column justify-content-center align-items-center">
-					<img
-						src="./assets/non-manifold.webp"
-						class="img-2 rounded figure-img"
-						style="image-rendering: pixelated"
-						alt="an"
-					/>
+				<figure class="float-end m-2 d-flex flex-column justify-content-center align-items-center">
+					<img src="./assets/non-manifold.webp" class="img-2 rounded figure-img" alt="an" />
 					<figcaption class="figure-caption">
-						Figure 4: A look ath the interior faces inside the model. Every face should be red.
+						Figure 3: A look ath the interior faces inside the model. Every face should be red.
 					</figcaption>
-				</div>
+				</figure>
 				<p>
 					Deciding what interactivity to add to The Tower was no easy task. Unlike with the other
 					megastructures, there was no obvious choice and so I decided to do a rigidbody simulation of the
@@ -344,7 +339,11 @@
 					content and trademarks are property of their respective owners.
 				</div>
 				<div class="d-flex gap-2">
-					<a href="https://github.com/brooke-ec/web-3d-applications" target="_blank">
+					<a
+						href="https://github.com/brooke-ec/web-3d-applications"
+						target="_blank"
+						aria-label="GitHub repository"
+					>
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="30">
 							<!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
 							<path
@@ -353,7 +352,7 @@
 							/>
 						</svg>
 					</a>
-					<a href="https://www.linkedin.com/in/brooke-reavell/" target="_blank">
+					<a href="https://www.linkedin.com/in/brooke-reavell/" target="_blank" aria-label="LinkedIn profile">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" width="30">
 							<!--!Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
 							<path
